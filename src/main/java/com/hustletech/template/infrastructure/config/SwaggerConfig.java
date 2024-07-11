@@ -1,6 +1,5 @@
 package com.hustletech.template.infrastructure.config;
 
-import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,13 +16,5 @@ public class SwaggerConfig {
                         .title("Template API")
                         .version("1.0")
                         .description("API documentation for the Template Java 17 Spring Oracle project"));
-    }
-
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public")
-                .pathsToMatch("/api/**")
-                .build();
     }
 }

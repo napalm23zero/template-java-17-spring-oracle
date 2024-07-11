@@ -60,25 +60,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!-- Hibernate ORM -->
-		<dependency>
-			<groupId>org.hibernate.orm</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>6.5.2.Final</version>
-		</dependency>
-		<!-- Oracle JDBC -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>19.8.0.0</version>
+			<artifactId>ojdbc11</artifactId>
+			<version>23.2.0.0</version>
 		</dependency>
 
-		    <!-- Springdoc OpenAPI -->
+		<!-- Springdoc OpenAPI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.7.0</version>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

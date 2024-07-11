@@ -31,9 +31,9 @@ So, you’ve decided to dive into the dark arts of Java and Spring Boot? Good ch
 6. **Run the Application Inside the DevContainer**:
 
    - Open a terminal inside the devcontainer and run:
-     ```sh
+     \```sh
      mvn spring-boot:run
-     ```
+     \```
    - Your application should be running at [http://localhost:6080](http://localhost:6080).
 
 7. **Access the Swagger Page from the Host Machine**:
@@ -44,16 +44,16 @@ So, you’ve decided to dive into the dark arts of Java and Spring Boot? Good ch
 1. **Build the Docker Image**:
 
    - Open your terminal (you do have Docker installed, don’t you?) and run:
-     ```sh
-     docker build -t template-java-17-spring .
-     ```
+     \```sh
+     docker build -t template-java-17-spring -f ./.docker/Dockerfile .
+     \```
 
-2. **Run the Docker Container**:
+2. **Run the Docker Compose**:
 
    - Once the build is done, run:
-     ```sh
-     docker run -d -p 8080:8080 template-java-17-spring
-     ```
+     \```sh
+     docker-compose -f ./.docker/docker-compose.yml up
+     \```
 
 3. **Boom!**:
 
@@ -100,3 +100,13 @@ May the force be with you, always.
 ---
 
 Feel free to customize any part of this README to better suit your project’s specifics or your personal style.
+
+### Additional Notes:
+
+- The Dockerfile for just running the application is located at `./.docker/Dockerfile`.
+- The Docker Compose file for running the application with Oracle DB is located at `./.docker/docker-compose.yml`.
+- The DevContainer setup is located at `./.devcontainer`.
+
+If you have any questions or run into any issues, feel free to reach out. Happy coding!
+
+---

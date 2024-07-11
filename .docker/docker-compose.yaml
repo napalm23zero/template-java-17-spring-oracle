@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  template-java-17-spring:
+    build: .
+    container_name: template-java-17-spring
+    image: napalm23zero/template-java-17-spring
+    ports:
+      - "8080:8080" # Expose the app on port 8080
+    depends_on:
+      - template-oracle-db # Ensure the DB starts before the app
+    environment: # [this is just for fun, NO PRODUCTION!] [IF PRODUCTION CHANGE IT!!!!!]
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//template-oracle-db:1521/XE # JDBC connection string
+      SPRING_DATASOURCE_USERNAME: TEMPLATE_APP # Database username
+      SPRING_DATASOURCE_PASSWORD: darkSide123 # Database password (May the dark side protect your secrets)
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: oracle.jdbc.OracleDriver # JDBC driver for Oracle
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update # Auto-update the DB schema (Be careful, young Padawan)
+      SPRING_JPA_SHOW_SQL: "true" # Show SQL queries in logs (Because who doesn't love seeing SQL in action?)
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.Oracle12cDialect # Hibernate dialect for Oracle 12c
+      SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIMEZONE: UTC # Set JDBC timezone to UTC
+      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: TEMPLATE_APP # Default schema for Hibernate
+      SPRING_JACKSON_TIME_ZONE: UTC # Set Jackson's timezone to UTC
+      SERVER_PORT: 8080 # Server port
+      SERVER_SERVLET_CONTEXT_PATH: /api # Context path for the application
+
+  template-oracle-db:
+    container_name: template-oracle-db
+    image: gvenzl/oracle-xe:21.3.0-slim # Use Oracle XE 21.3.0 because we like to live on the edge
+    ports:
+      - "1521:1521" # Expose Oracle DB on port 1521 (Default Oracle port)
+    environment:
+      ORACLE_PASSWORD: darkSide123 # Database password (Join the dark side, we have cookies)
+      ORACLE_CHARACTERSET: AL32UTF8 # Set character set to UTF-8
+      TZ: "UTC" # Set timezone to UTC
+    volumes:
+      - oracle-data:/opt/oracle/oradata # Persist database data
+      - ./init.sql:/container-entrypoint-startdb.d/init.sql:ro # Initialize DB with this script (Make sure it's there, or suffer the consequences)
+
+volumes:
+  oracle-data:
+    driver: local # Use local driver for volume (Keep your data close, and your volumes closer)

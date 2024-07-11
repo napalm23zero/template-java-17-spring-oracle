@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
