@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  template-java-17-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: template-java-17-spring
+    image: napalm23zero/template-java-17-spring
+    ports:
+      - "6080:8080"
+    volumes:
+      - ../:/workspace
+      - ${HOME}/.m2:/root/.m2
+    depends_on:
+      - template-oracle-db
+      
+  template-oracle-db:
+    container_name: template-oracle-db
+    image: oracleinanutshell/oracle-xe-11g
+    ports:
+      - "6521:1521"
+    environment:
+      ORACLE_ALLOW_REMOTE: "true"
+      ORACLE_DISABLE_ASYNCH_IO: "true"
+      ORACLE_PWD: darkSide123
+
+networks:
+  default:
+    external:
+      name: napalm23zero
