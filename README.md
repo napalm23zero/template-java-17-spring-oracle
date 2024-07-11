@@ -4,6 +4,8 @@
 
 So, you’ve decided to dive into the dark arts of Java and Spring Boot? Good choice! Let’s get this bad boy up and running. Whether you’re using devcontainers like a true modern developer or just wanna run the Dockerfile straight up, I got you covered.
 
+I'm Rodrigo Dantas and you can send me an email if you need something, I'll do my best to answer [rodrigo.dantas@hustletech.dev](mailto:rodrigo.dantas@hustletech.dev) :)
+
 ### Quick Start Guide
 
 #### 1. Running with DevContainers (because you're fancy)
