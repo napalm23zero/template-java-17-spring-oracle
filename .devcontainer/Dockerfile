@@ -14,6 +14,9 @@ RUN git config --global user.name "your name" && \
     git config --global http.sslVerify false && \
     git config --global http.postBuffer 1048576000
 
+# Adding timezone setting to JVM options
+ENV JAVA_OPTS="-Duser.timezone=UTC"
+
 # Setting our workspace, where the magic happens
 WORKDIR /workspace
 

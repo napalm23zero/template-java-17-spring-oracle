@@ -1,10 +1,10 @@
-package com.hustletech.template_java_17_spring_oracle;
+package com.hustletech.template;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TemplateJava17SpringOracleApplicationTests {
+class TemplateApplicationTests {
 
 	@Test
 	void contextLoads() {

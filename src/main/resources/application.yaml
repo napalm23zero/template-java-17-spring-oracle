@@ -1,1 +1,23 @@
-spring.application.name=template-java-17-spring-oracle
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: TEMPLATE_APP
+    password: darkSide123
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        jdbc:
+          time-zone: UTC
+        default-schema: TEMPLATE_APP
+  jackson:
+    time-zone: UTC
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api

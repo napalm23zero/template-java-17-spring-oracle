@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   template-java-17-spring:
     build:
@@ -13,7 +13,7 @@ services:
       - ${HOME}/.m2:/root/.m2
     depends_on:
       - template-oracle-db
-      
+
   template-oracle-db:
     container_name: template-oracle-db
     image: oracleinanutshell/oracle-xe-11g
@@ -21,8 +21,15 @@ services:
       - "6521:1521"
     environment:
       ORACLE_ALLOW_REMOTE: "true"
-      ORACLE_DISABLE_ASYNCH_IO: "true"
-      ORACLE_PWD: darkSide123
+      ORACLE_PASSWORD: darkSide123
+      TZ: "Etc/UTC"
+    volumes:
+      - oracle-data:/u01/app/oracle
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  oracle-data:
+    driver: local
 
 networks:
   default:
