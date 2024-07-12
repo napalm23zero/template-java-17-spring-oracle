@@ -1,32 +1,37 @@
-spring:
-  datasource:
-    url: jdbc:oracle:thin:@//template-oracle-db:1521/XE
-    username: TEMPLATE_APP
-    password: darkSide123
-    driverClassName: oracle.jdbc.OracleDriver
-    hikari:
-      data-source-properties:
-        oracle.jdbc.timezoneAsRegion: false
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.Oracle12cDialect
-        jdbc:
-          timeZone: UTC
-        defaultSchema: TEMPLATE_APP
-  jackson:
-    time-zone: UTC
+version: "3.8"
+services:
+  template-java-17-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: template-java-17-spring
+    image: napalm23zero/template-java-17-spring
+    ports:
+      - "6080:8080"
+    volumes:
+      - ../:/workspace
+      - ${HOME}/.m2:/root/.m2
+    depends_on:
+      - template-oracle-db
 
-server:
-  port: 8080
-  servlet:
-    contextPath: /api
+  template-oracle-db:
+    container_name: template-oracle-db
+    image: gvenzl/oracle-xe:21.3.0-slim
+    ports:
+      - "6521:1521"
+    environment:
+      ORACLE_PASSWORD: darkSide123
+      ORACLE_CHARACTERSET: AL32UTF8
+      TZ: "UTC"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./init.sql:/container-entrypoint-startdb.d/init.sql:ro
 
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
+volumes:
+  oracle-data:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: napalm23zero
