@@ -9,8 +9,8 @@ LABEL email="rodrigo.dantas@hustletech.dev"
 RUN apt-get update && apt-get install -y maven git python3 unzip curl coreutils
 
 # Git config because I'm too lazy to type it every time
-RUN git config --global user.name "your name" && \
-    git config --global user.email "your email" && \
+RUN git config --global user.name "Rodrigo Dantas" && \
+   	git config --global user.email "rodrigo.dantas@hustletech.dev" && \
     git config --global http.sslVerify false && \
     git config --global http.postBuffer 1048576000
 
