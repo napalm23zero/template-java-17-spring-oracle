@@ -199,7 +199,7 @@ To deploy and run the application using Docker containers, follow these steps:
 3. **Build and start the Docker containers:**
 
    ```bash
-   docker-compose -f .docker/docker-compose.yml up --build
+   docker-compose -f .docker/docker-compose.yaml up --build
    ```
 
 4. **Access the application:**
@@ -217,7 +217,7 @@ When running the application with Docker Compose, use the following connection s
 
 ### Docker Compose Configuration
 
-Refer to the `.docker/docker-compose.yml` file for the Docker Compose configuration, which sets up the following services:
+Refer to the `.docker/docker-compose.yaml` file for the Docker Compose configuration, which sets up the following services:
 
 - **template-java-17-spring:** The main application service, built from the provided Dockerfile.
 - **template-oracle-db:** An Oracle XE database service.

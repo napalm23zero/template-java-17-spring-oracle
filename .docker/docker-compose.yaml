@@ -1,23 +1,25 @@
 version: "3.8"
 
 services:
-  template-java-17-spring:
-    build: .
-    container_name: template-java-17-spring
-    image: napalm23zero/template-java-17-spring
+  template-java-17-spring-build:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+    container_name: template-java-17-spring-build
+    image: napalm23zero/template-java-17-spring-build
     ports:
       - "8080:8080" # Expose the app on port 8080
     depends_on:
-      - template-oracle-db # Ensure the DB starts before the app
+      - template-oracle-db-build # Ensure the DB starts before the app
     environment: # [this is just for fun, NO PRODUCTION!] [IF PRODUCTION CHANGE IT!!!!!]
-      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//template-oracle-db:1521/XE # JDBC connection string
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//template-oracle-db-build:1521/XE # JDBC connection string
       SPRING_DATASOURCE_USERNAME: TEMPLATE_APP # Database username
       SPRING_DATASOURCE_PASSWORD: darkSide123 # Database password (May the dark side protect your secrets)
       HIBERNATE_DEFAULT_SCHEMA: TEMPLATE_APP # Default schema for Hibernate
       SERVER_PORT: 8080 # Server port
 
-  template-oracle-db:
-    container_name: template-oracle-db
+  template-oracle-db-build:
+    container_name: template-oracle-db-build
     image: gvenzl/oracle-xe:21.3.0-slim # Use Oracle XE 21.3.0 because we like to live on the edge
     ports:
       - "1521:1521" # Expose Oracle DB on port 1521 (Default Oracle port)

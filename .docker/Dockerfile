@@ -1,5 +1,12 @@
 # Stage 1: Build the application
-FROM maven:3.8.6-openjdk-17 as builder
+FROM openjdk:17-slim-bullseye AS builder
+
+# Who's the boss?
+LABEL maintainer="Rodrigo Dantas"
+LABEL email="rodrigo.dantas@hustletech.dev"
+
+# Installing a bunch of stuff because every ninja needs some tools
+RUN apt-get update && apt-get install -y maven git python3 unzip curl coreutils
 
 # Set working directory inside the container (It's where the magic happens)
 WORKDIR /app
@@ -11,11 +18,11 @@ RUN mvn dependency:go-offline -B
 
 # Copy the source code and build the application
 COPY src ./src
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 2: Create the final image
-# Use a slim base image for Java 17 (Slim because we're on a diet)
-FROM openjdk:17-jdk-slim
+# Use the same base image for Java 17
+FROM openjdk:17-slim-bullseye
 
 # Set working directory inside the container (Again, where the magic happens)
 WORKDIR /app

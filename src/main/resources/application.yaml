@@ -10,6 +10,7 @@ spring:
           jdbc:
             timezoneAsRegion: false
   jpa:
+    databasePlatform: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: update
     show-sql: true
