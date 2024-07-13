@@ -1,114 +1,232 @@
-# Template Java 17 Spring Boot Application
+# template-java-17-spring-oracle
 
-## Welcome, Hustlers of Hustle Tech!
+<p align="center">
+  <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png" alt="Java">
+  <img src="https://img.icons8.com/color/48/000000/spring-logo.png" alt="Spring">
+  <img src="https://img.icons8.com/color/48/000000/oracle-logo.png" alt="Oracle">
+  <img src="https://img.icons8.com/color/48/000000/visual-studio-code-2019.png" alt="VSCode">
+  <img src="https://img.icons8.com/color/48/000000/docker.png" alt="Docker">
+</p>
 
-So, you’ve decided to dive into the dark arts of Java and Spring Boot? Good choice! Let’s get this bad boy up and running. Whether you’re using devcontainers like a true modern developer or just wanna run the Dockerfile straight up, I got you covered.
+## About the Project
 
-I'm Rodrigo Dantas and you can send me an email if you need something, I'll do my best to answer [rodrigo.dantas@hustletech.dev](mailto:rodrigo.dantas@hustletech.dev) :)
+Welcome to the **template-java-17-spring-oracle** repository! This template application is crafted by Rodrigo Dantas, a Brazilian software engineer, with the aim to showcase the very best practices in Java 17, Spring Boot, and Oracle Database. This project serves as a portfolio piece and an exemplary guide for newbies stepping into the world of clean architecture.
 
-### Quick Start Guide
+## About Me
 
-#### 1. Running with DevContainers (because you're fancy)
+Hello, I'm **Rodrigo Dantas**, the tech nerd behind this project. With a passion for crafting clean, efficient, and scalable code, I dedicate myself to helping others grow in their software engineering journey. Feel free to reach out to me if you have any questions, need assistance, or just want to talk tech!
 
-1. **Open your VSCode**:
+**Contact me:**
 
-   - If you don’t have it, stop right here and get it. Seriously.
+<p align="center">
+  <a href="mailto:rodrigo.dantas@hustletech.dev"><img src="https://img.icons8.com/color/48/000000/email.png" alt="Email"></a>
+  <a href="https://www.instagram.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram"></a>
+  <a href="https://twitter.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/twitter.png" alt="Twitter"></a>
+  <a href="https://github.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub"></a>
+  <a href="https://www.linkedin.com/in/napalm23zero"><img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn"></a>
+  <a href="https://www.tiktok.com/@napalm23zero"><img src="https://img.icons8.com/color/48/000000/tiktok.png" alt="TikTok"></a>
+  <a href="https://www.epicgames.com/id/add-friend?displayName=napalm23zero"><img src="https://img.icons8.com/color/48/000000/epic-games.png" alt="Epic Games"></a>
+  <a href="https://discord.com/users/napalm23zero"><img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord"></a>
+  <a href="https://steamcommunity.com/id/napalm23zero"><img src="https://img.icons8.com/color/48/000000/steam.png" alt="Steam"></a>
+  <a href="https://us.battle.net/support/en/games/napalm23zero"><img src="https://img.icons8.com/color/48/000000/battle-net.png" alt="Blizzard"></a>
+  <a href="https://my.playstation.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/play-station.png" alt="PlayStation"></a>
+  <a href="https://account.xbox.com/en-us/profile?gamertag=napalm23zero"><img src="https://img.icons8.com/color/48/000000/xbox.png" alt="Xbox Live"></a>
+  <a href="https://accounts.nintendo.com/profile?ng=napalm2300"><img src="https://img.icons8.com/color/48/000000/nintendo.png" alt="Nintendo Online"></a>
+  <a href="https://open.spotify.com/user/napalm23zero"><img src="https://img.icons8.com/color/48/000000/spotify.png" alt="Spotify"></a>
+  <a href="https://www.youtube.com/c/napalm23zero"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube"></a>
+  <a href="https://www.twitch.tv/napalm23zero"><img src="https://img.icons8.com/color/48/000000/twitch.png" alt="Twitch"></a>
+</p>
 
-2. **Open this Project Folder**:
+I'm here to help, so don't hesitate to contact me via email or any of my social networks. Let's embark on this coding adventure together!
 
-   - Navigate to where you cloned this repository and open it.
+## Table of Contents
 
-3. **Reopen in Container**:
+- [Getting Started](#getting-started)
+  - [Running the Application in a DevContainer](#running-the-application-in-a-devcontainer)
+  - [Accessing the Database](#accessing-the-database)
+  - [Accessing Swagger Endpoint Outside the Container](#accessing-swagger-endpoint-outside-the-container)
+  - [Running the Application with Docker Compose](#running-the-application-with-docker-compose)
+- [Project Structure and Clean Architecture](#project-structure-and-clean-architecture)
+  - [Project Structure](#project-structure)
+  - [Explanation of Clean Architecture and SOLID Principles](#explanation-of-clean-architecture-and-solid-principles)
+- [Database Initialization](#database-initialization)
 
-   - VSCode should automatically detect the `.devcontainer` folder and ask you if you want to reopen in a container. Click yes. If it doesn’t, hit F1, type “Dev Containers: Reopen in Container” and hit enter.
+## Project Structure and Clean Architecture
 
-4. **Watch the Magic**:
+This project follows the principles of Clean Architecture, ensuring a clear separation of concerns and high maintainability. Below is an overview of the project structure and how it aligns with Clean Architecture and SOLID principles:
 
-   - Grab a coffee or whatever because this might take a few minutes the first time. You’ll see a bunch of stuff happening. That’s your environment being set up. Cool, right?
+### Project Structure
 
-5. **Start Coding**:
+```
+src/
+└── main/
+    └── java/
+        └── com/
+            └── hustletech/
+                └── template/
+                    ├── adapters/
+                    │   ├── controller/
+                    │   │   ├── UserController.java
+                    │   │   └── exception/
+                    │   │       ├── UserNotFoundException.java
+                    │   ├── service/
+                    │       ├── UserService.java
+                    ├── application/
+                    │   ├── dto/
+                    │   │   ├── UserRequestDTO.java
+                    │   │   └── UserResponseDTO.java
+                    │   ├── mapper/
+                    │   │   └── UserMapper.java
+                    │   └── usecase/
+                    │       └── user/
+                    │           ├── CreateUserUseCase.java
+                    │           ├── DeleteUserUseCase.java
+                    │           ├── GetUserUseCase.java
+                    │           └── UpdateUserUseCase.java
+                    ├── domain/
+                    │   ├── entity/
+                    │   │   ├── GenericEntity.java
+                    │   │   └── User.java
+                    │   └── repository/
+                    │       └── UserRepository.java
+                    └── infrastructure/
+                        └── config/
+                            ├── DatabaseConfig.java
+                            ├── SwaggerConfig.java
+                            └── TemplateApplication.java
+```
 
-   - You’re all set. Your environment is ready. Start writing some badass code.
+## Explanation of Clean Architecture and SOLID Principles
 
-6. **Run the Application Inside the DevContainer**:
+### Adapters Layer
 
-   - Open a terminal inside the devcontainer and run:
-     \```sh
-     mvn spring-boot:run
-     \```
-   - Your application should be running at [http://localhost:6080](http://localhost:6080).
+- **Controller:** The `UserController` class handles HTTP requests and maps them to the appropriate use cases. It serves as an interface adapter that translates user actions into application actions.
+- **Exception:** The `UserNotFoundException` class is used to handle specific exceptions related to user operations.
 
-7. **Access the Swagger Page from the Host Machine**:
-   - Open your browser and navigate to [http://localhost:6080/api/swagger-ui.html](http://localhost:6080/api/swagger-ui.html).
+### Application Layer
 
-#### 2. Running with Dockerfile (for the minimalists)
+- **DTO (Data Transfer Object):** Classes like `UserRequestDTO` and `UserResponseDTO` are used to transfer data between the layers. They ensure that the internal domain models are not exposed to the external world.
+- **Mapper:** The `UserMapper` class is responsible for mapping between domain models and DTOs, facilitating data transformation and ensuring separation of concerns.
+- **Use Case:** The use cases (`CreateUserUseCase`, `DeleteUserUseCase`, `GetUserUseCase`, `UpdateUserUseCase`) encapsulate the business logic and application-specific rules. They orchestrate the execution of business rules without being influenced by the delivery mechanism.
 
-1. **Build the Docker Image**:
+### Domain Layer
 
-   - Open your terminal (you do have Docker installed, don’t you?) and run:
-     \```sh
-     docker build -t template-java-17-spring -f ./.docker/Dockerfile .
-     \```
+- **Entity:** Classes like `GenericEntity` and `User` represent the core business entities of the application. They are the most stable and central part of the application.
+- **Repository:** The `UserRepository` interface defines the contract for data access, ensuring that the domain layer is not dependent on the data access layer's implementation details.
 
-2. **Run the Docker Compose**:
+### Infrastructure Layer
 
-   - Once the build is done, run:
-     \```sh
-     docker-compose -f ./.docker/docker-compose.yml up
-     \```
+- **Config:** Classes like `DatabaseConfig`, `SwaggerConfig`, and `TemplateApplication` handle infrastructure-specific configurations and bootstrapping. They ensure that the application is properly set up and configured.
 
-3. **Boom!**:
+## SOLID Principles Applied
 
-   - Your application should be running at [http://localhost:8080](http://localhost:8080). If it’s not, check your steps, you probably messed up somewhere.
+1. **Single Responsibility Principle (SRP):** Each class in the project has a single responsibility. For instance, the `UserService` class handles business logic, while the `UserController` class handles HTTP requests.
+2. **Open/Closed Principle (OCP):** The project is designed to be open for extension but closed for modification. New features can be added through new use cases or extending existing ones without modifying the core logic.
+3. **Liskov Substitution Principle (LSP):** The domain models and DTOs can be substituted without affecting the correctness of the program.
+4. **Interface Segregation Principle (ISP):** The `UserRepository` interface provides a clear contract for data access, ensuring that clients are not forced to depend on methods they do not use.
+5. **Dependency Inversion Principle (DIP):** The project depends on abstractions (interfaces) rather than concrete implementations. For example, the `UserRepository` interface is used by the service layer, decoupling the business logic from the data access layer.
 
-4. **Access the Swagger Page**:
-   - Open your browser and navigate to [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
+This structure and adherence to Clean Architecture and SOLID principles ensure that the project is modular, testable, and maintainable. Each layer has a specific role, promoting separation of concerns and making it easier to manage and extend the application.
 
-### Project Structure (aka Clean Architecture)
+## Running the Application in a DevContainer
 
-This project follows the Clean Architecture principles because we like our code clean and our minds clearer. Here’s a quick breakdown:
+1. **Clone the repository:**
 
-- **adapters/controller**: Where the HTTP requests are handled. You know, the endpoints.
-- **application/dto**: Data Transfer Objects. Fancy term for stuff that gets passed around.
-- **application/mapper**: Maps DTOs to entities and vice versa. Like a tour guide for data.
-- **application/usecase/user**: The real MVPs. These are your use cases – the core business logic.
-- **domain/entity**: The heart and soul. Your entities live here.
-- **infrastructure/config**: Configuration files. Not the most exciting, but necessary.
-- **repository**: Handles data access. Repositories are like the data ninjas of your application.
-- **service**: Service layer. Manages business logic and calls repositories.
+   ```bash
+   git clone https://github.com/napalm23zero/template-java-17-spring-oracle.git
+   cd template-java-17-spring-oracle
+   ```
 
-### Dependencies
+2. **Open the project in VSCode:**
 
-Here’s what we’re working with:
+   ```bash
+   code .
+   ```
 
-- **Spring Boot**: Because who likes writing boilerplate code?
-- **Lombok**: Less code, more fun.
-- **Spring Data JPA**: For that sweet ORM goodness.
-- **Oracle JDBC**: To connect to our Oracle database.
-- **Springdoc OpenAPI**: Swagger UI for API documentation.
+3. **Open the Command Palette (F1) and select:**
 
-### Dev Setup
+   ```plaintext
+   Remote-Containers: Reopen in Container
+   ```
 
-- **Java 17**: We like living on the edge.
-- **Maven**: For managing dependencies.
-- **Docker**: Because containers are awesome.
+4. **Wait for the dev container to build and start.** This might take a few minutes depending on your system and internet speed.
 
-### Closing Notes
+5. **Once the container is running, open a terminal in VSCode and run:**
 
-You’ve made it this far. Either you’re really dedicated, or you just scrolled down to see if this README would ever end. Either way, good job. Now go forth and code like the wind!
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
 
-May the force be with you, always.
+6. **Access the application:**
 
----
+   - **API Endpoint:** [http://localhost:6080/api](http://localhost:6080/api)
+   - **Swagger UI:** [http://localhost:6080/swagger-ui.html](http://localhost:6080/swagger-ui.html)
 
-Feel free to customize any part of this README to better suit your project’s specifics or your personal style.
+### Datbase Access
 
-### Additional Notes:
+When running the application in a DevContainer, use the following connection string to access the Oracle database:
 
-- The Dockerfile for just running the application is located at `./.docker/Dockerfile`.
-- The Docker Compose file for running the application with Oracle DB is located at `./.docker/docker-compose.yml`.
-- The DevContainer setup is located at `./.devcontainer`.
+- **JDBC URL:** `jdbc:oracle:thin:@//template-oracle-db:1521/XE`
+- **Username:** `TEMPLATE_APP`
+- **Password:** `darkSide123`
 
-If you have any questions or run into any issues, feel free to reach out. Happy coding!
+### Accessing Swagger Endpoint Outside the Container
 
----
+If you want to access the Swagger UI outside of the dev container, follow these steps:
+
+1. **Ensure the application is running inside the dev container as described above.**
+
+2. **Open your web browser and navigate to:**
+
+   [http://localhost:6080/swagger-ui.html](http://localhost:6080/swagger-ui.html)
+
+## Running the Application with Docker Compose
+
+To deploy and run the application using Docker containers, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/napalm23zero/template-java-17-spring-oracle.git
+   cd template-java-17-spring-oracle
+   ```
+
+2. **Ensure Docker and Docker Compose are installed on your system.**
+
+3. **Build and start the Docker containers:**
+
+   ```bash
+   docker-compose -f .docker/docker-compose.yml up --build
+   ```
+
+4. **Access the application:**
+
+   - **API Endpoint:** [http://localhost:8080/api](http://localhost:8080/api)
+   - **Swagger UI:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+### Datbase Access
+
+When running the application with Docker Compose, use the following connection string to access the Oracle database:
+
+- **JDBC URL:** `jdbc:oracle:thin:@//localhost:1521/XE`
+- **Username:** `TEMPLATE_APP`
+- **Password:** `darkSide123`
+
+### Docker Compose Configuration
+
+Refer to the `.docker/docker-compose.yml` file for the Docker Compose configuration, which sets up the following services:
+
+- **template-java-17-spring:** The main application service, built from the provided Dockerfile.
+- **template-oracle-db:** An Oracle XE database service.
+
+### Dockerfile
+
+The Dockerfile used to build the `template-java-17-spring` service can be found in the root directory. It consists of two stages
+a build stage using Maven and an execution stage using a slim Java 17 base image.
+
+## Database Initialization
+
+The `init.sql` file is used to initialize the Oracle database with the necessary schema and user. This file is automatically executed when the `template-oracle-db` container starts.
+
+Happy coding!
