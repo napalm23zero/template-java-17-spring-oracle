@@ -25,30 +25,32 @@ Hello, I'm **Rodrigo Dantas**, the tech nerd behind this project. With a passion
   <a href="https://github.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub"></a>
   <a href="https://www.linkedin.com/in/napalm23zero"><img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn"></a>
   <a href="https://www.tiktok.com/@napalm23zero"><img src="https://img.icons8.com/color/48/000000/tiktok.png" alt="TikTok"></a>
-  <a href="https://www.epicgames.com/id/add-friend?displayName=napalm23zero"><img src="https://img.icons8.com/color/48/000000/epic-games.png" alt="Epic Games"></a>
   <a href="https://discord.com/users/napalm23zero"><img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord"></a>
   <a href="https://steamcommunity.com/id/napalm23zero"><img src="https://img.icons8.com/color/48/000000/steam.png" alt="Steam"></a>
-  <a href="https://us.battle.net/support/en/games/napalm23zero"><img src="https://img.icons8.com/color/48/000000/battle-net.png" alt="Blizzard"></a>
-  <a href="https://my.playstation.com/napalm23zero"><img src="https://img.icons8.com/color/48/000000/play-station.png" alt="PlayStation"></a>
-  <a href="https://account.xbox.com/en-us/profile?gamertag=napalm23zero"><img src="https://img.icons8.com/color/48/000000/xbox.png" alt="Xbox Live"></a>
-  <a href="https://accounts.nintendo.com/profile?ng=napalm2300"><img src="https://img.icons8.com/color/48/000000/nintendo.png" alt="Nintendo Online"></a>
-  <a href="https://open.spotify.com/user/napalm23zero"><img src="https://img.icons8.com/color/48/000000/spotify.png" alt="Spotify"></a>
-  <a href="https://www.youtube.com/c/napalm23zero"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube"></a>
+  <a href="https://open.spotify.com/user/22shqo6vu5mqvdgwxi66gawta"><img src="https://img.icons8.com/color/48/000000/spotify.png" alt="Spotify"></a>
+  <a href="https://www.youtube.com/@napalm23zero"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube"></a>
   <a href="https://www.twitch.tv/napalm23zero"><img src="https://img.icons8.com/color/48/000000/twitch.png" alt="Twitch"></a>
 </p>
 
 I'm here to help, so don't hesitate to contact me via email or any of my social networks. Let's embark on this coding adventure together!
 
-## Table of Contents
+# Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Running the Application in a DevContainer](#running-the-application-in-a-devcontainer)
-  - [Accessing the Database](#accessing-the-database)
-  - [Accessing Swagger Endpoint Outside the Container](#accessing-swagger-endpoint-outside-the-container)
-  - [Running the Application with Docker Compose](#running-the-application-with-docker-compose)
 - [Project Structure and Clean Architecture](#project-structure-and-clean-architecture)
   - [Project Structure](#project-structure)
   - [Explanation of Clean Architecture and SOLID Principles](#explanation-of-clean-architecture-and-solid-principles)
+  - [Adapters Layer](#adapters-layer)
+  - [Application Layer](#application-layer)
+  - [Domain Layer](#domain-layer)
+  - [Infrastructure Layer](#infrastructure-layer)
+- [SOLID Principles Applied](#solid-principles-applied)
+- [Running the Application in a DevContainer](#running-the-application-in-a-devcontainer)
+  - [Database Access](#database-access)
+  - [Accessing Swagger Endpoint Outside the Container](#accessing-swagger-endpoint-outside-the-container)
+- [Running the Application with Docker Compose](#running-the-application-with-docker-compose)
+  - [Database Access](#database-access-1)
+  - [Docker Compose Configuration](#docker-compose-configuration)
+  - [Dockerfile](#dockerfile)
 - [Database Initialization](#database-initialization)
 
 ## Project Structure and Clean Architecture
