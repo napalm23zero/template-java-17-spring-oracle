@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@//template-oracle-db:1521/XE}
+    url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@//template-oracle-db-build:1521/XE}
     username: ${SPRING_DATASOURCE_USERNAME:TEMPLATE_APP}
     password: ${SPRING_DATASOURCE_PASSWORD:darkSide123}
     driverClassName: oracle.jdbc.OracleDriver

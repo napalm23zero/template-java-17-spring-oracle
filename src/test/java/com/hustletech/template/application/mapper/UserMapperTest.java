@@ -2,6 +2,7 @@ package com.hustletech.template.application.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,20 +27,20 @@ class UserMapperTest {
         user.setId(1L);
         user.setName("Peter Parker");
         user.setEmail("peter.parker@dailybugle.com");
-        user.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        user.setBirthday(LocalDate.of(2001, 8, 10));
         user.setCreateDate(LocalDateTime.now());
         user.setUpdateDate(LocalDateTime.now());
 
         userRequestDTO = new UserRequestDTO();
         userRequestDTO.setName("Peter Parker");
         userRequestDTO.setEmail("peter.parker@dailybugle.com");
-        userRequestDTO.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        userRequestDTO.setBirthday(LocalDate.of(2001, 8, 10));
 
         userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(1L);
         userResponseDTO.setName("Peter Parker");
         userResponseDTO.setEmail("peter.parker@dailybugle.com");
-        userResponseDTO.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        userResponseDTO.setBirthday(LocalDate.of(2001, 8, 10));
         userResponseDTO.setCreateDate(user.getCreateDate());
         userResponseDTO.setUpdateDate(user.getUpdateDate());
     }

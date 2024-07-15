@@ -1,6 +1,6 @@
 package com.hustletech.template.domain.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,5 +21,5 @@ public class User extends GenericEntity {
     private String email;
 
     @Column(name = "birthday")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 }

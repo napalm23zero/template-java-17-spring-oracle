@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,12 +43,12 @@ class UserServiceTest {
         user.setId(1L);
         user.setName("Peter Parker");
         user.setEmail("peter.parker@dailybugle.com");
-        user.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        user.setBirthday(LocalDate.of(2001, 8, 10));
 
         userRequestDTO = new UserRequestDTO();
         userRequestDTO.setName("Peter Parker");
         userRequestDTO.setEmail("peter.parker@dailybugle.com");
-        userRequestDTO.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        userRequestDTO.setBirthday(LocalDate.of(2001, 8, 10));
 
         userResponseDTO = UserMapper.toResponseDTO(user);
     }

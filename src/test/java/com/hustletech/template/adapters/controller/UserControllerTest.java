@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,13 +48,13 @@ class UserControllerTest {
         userRequestDTO = new UserRequestDTO();
         userRequestDTO.setName("Peter Parker");
         userRequestDTO.setEmail("peter.parker@dailybugle.com");
-        userRequestDTO.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        userRequestDTO.setBirthday(LocalDate.of(2001, 8, 10));
 
         userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(1L);
         userResponseDTO.setName("Peter Parker");
         userResponseDTO.setEmail("peter.parker@dailybugle.com");
-        userResponseDTO.setBirthday(LocalDateTime.of(1990, 1, 1, 0, 0));
+        userResponseDTO.setBirthday(LocalDate.of(2001, 8, 10));
     }
 
     @Test
