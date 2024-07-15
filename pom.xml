@@ -97,26 +97,8 @@
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
 							<goal>report</goal>
 						</goals>
-					</execution>
-					<execution>
-						<id>report-lcov</id>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/jacoco-lcov</outputDirectory>
-							<formats>
-								<format>lcov</format>
-							</formats>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
