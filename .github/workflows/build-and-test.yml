@@ -30,8 +30,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-17-jdk maven git curl
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-          sudo apt-get install -y nodejs
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -60,14 +58,10 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
-      - name: Install jacoco-lcov
-        run: npm install -g jacoco-lcov
-
-      - name: Convert Jacoco XML to LCOV
-        run: jacoco-lcov target/site/jacoco/jacoco.xml > target/jacoco-lcov/jacoco.lcov
+      - name: Generate Coverage Badges
+        run: mvn fr.brouillard.oss:jacoco-badge-generator:1.1.2:generate
 
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: target/jacoco-lcov/jacoco.lcov
