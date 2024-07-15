@@ -10,6 +10,10 @@
 
 <p align="center">
    <img src="https://github.com/napalm23zero/template-java-17-spring-oracle/actions/workflows/build-and-test.yml/badge.svg" alt="Build and Test">
+   <img src="https://coveralls.io/repos/github/napalm23zero/template-java-17-spring-oracle/badge.svg" alt="Coverage Status">
+</p>
+
+<p align="center">
    <img src="https://img.shields.io/badge/Java-17-blue" alt="Java">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.7.2-brightgreen" alt="Spring Boot">
    <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
@@ -19,7 +23,6 @@
 </p>
 
 <p align="center">
-   <img src="https://img.shields.io/badge/swagger-available-green" alt="Swagger">
    <img src="https://img.shields.io/badge/commits-daily-brightgreen.svg" alt="Commit Frequency">
    <img src="https://img.shields.io/badge/code%20quality-A%2B-brightgreen.svg" alt="Code Quality">
    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
@@ -28,6 +31,9 @@
    <img src="https://img.shields.io/github/contributors/napalm23zero/template-java-17-spring-oracle" alt="Contributors">
    <img src="https://img.shields.io/github/issues/napalm23zero/template-java-17-spring-oracle" alt="Open Issues">
    <img src="https://img.shields.io/github/license/napalm23zero/template-java-17-spring-oracle" alt="License">
+</p>
+
+<p align="center">
    <img src="https://img.shields.io/badge/jokes-hilarious-brightgreen.svg" alt="Jokes Badge">
    <img src="https://img.shields.io/badge/nerd-alert-brightgreen.svg" alt="Nerd Alert">
 </p>
