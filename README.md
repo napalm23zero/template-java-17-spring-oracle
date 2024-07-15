@@ -52,10 +52,9 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
   - [Docker Compose Configuration](#docker-compose-configuration)
   - [Dockerfile](#dockerfile)
 - [Database Initialization](#database-initialization)
-- [Deploying the Application](#deploying-the-application)
-  - [Choosing a Cloud Provider](#choosing-a-cloud-provider)
-  - [Setting Up Secrets](#setting-up-secrets)
-    -[]
+- [Build, Test and Deploying the Application](#build-test-and-deploying-the-application-github-actions)
+  - [Build and Test Workflow](#build-and-test-workflow)
+  - [Deploying the Application](#deploying-the-application)
 
 ## Project Structure and Clean Architecture
 
@@ -235,6 +234,32 @@ a build stage using Maven and an execution stage using a slim Java 17 base image
 
 The `init.sql` file is used to initialize the Oracle database with the necessary schema and user. This file is automatically executed when the `template-oracle-db` container starts.
 
+## Build, Test and Deploying the Application (GitHub Actions)
+
+## Build and Test Workflow
+
+The project uses GitHub Actions for continuous integration and testing. The build and test process is defined in the `build-and-test.yml` file.
+
+### Build and Test Workflow
+
+1. **Trigger**: The workflow is triggered on pushes and pull requests to the `main` branch.
+2. **Environment**: The job runs on `ubuntu-latest`.
+3. **Services**: An Oracle database service is set up using the `gvenzl/oracle-xe:21.3.0-slim` image.
+4. **Steps**:
+   - **Checkout code**: Uses `actions/checkout@v2` to check out the code from the repository.
+   - **Set up JDK 17**: Uses `actions/setup-java@v2` to set up Java Development Kit 17.
+   - **Cache Maven packages**: Caches Maven dependencies to speed up the build process.
+   - **Install dependencies**: Installs Maven dependencies offline.
+   - **Build with Maven**: Compiles the code and packages it, skipping tests.
+   - **Run tests**: Executes the test suite.
+
+### How to Check the Workflow
+
+1. Go to your repository on GitHub.
+2. Click on `Actions`.
+3. Select the `Build and Test` workflow from the list.
+4. You can see the history of workflow runs, their statuses, and detailed logs for each step.
+
 ## Deploying the Application
 
 ### Choosing a Cloud Provider
@@ -284,6 +309,26 @@ To deploy this application, you need to set the `CLOUD_PROVIDER` secret to one o
 - `HEROKU_API_KEY`
 - `HEROKU_APP_NAME`
 
-After setting up the secrets, the workflow will automatically deploy the application to the chosen cloud provider when you push changes to the main branch.
+### Deployment Workflow
+
+The deployment process is automated using GitHub Actions. The deployment workflow is defined in the `deploy-cloud.yml` file.
+
+### How It Works
+
+1. **Trigger**: The workflow is triggered on pushes to the `main` branch.
+2. **Environment**: The job runs on `ubuntu-latest`.
+3. **Steps**:
+   - **Checkout code**: Uses `actions/checkout@v2` to check out the code from the repository.
+   - **Set up the cloud provider**: Based on the `CLOUD_PROVIDER` secret, sets up the necessary environment for deployment.
+   - **Deploy to the cloud**: Executes the deployment script specific to the chosen cloud provider.
+
+### How to Check the Deployment Workflow
+
+1. Go to your repository on GitHub.
+2. Click on `Actions`.
+3. Select the `Deploy` workflow from the list.
+4. You can see the history of workflow runs, their statuses, and detailed logs for each step.
+
+By following these instructions, you can ensure that your application is built, tested, and deployed seamlessly across different cloud providers.
 
 Happy coding!
