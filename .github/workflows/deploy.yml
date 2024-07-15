@@ -1,9 +1,6 @@
 name: Deploy to Cloud
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -48,7 +45,7 @@ jobs:
         if: env.CLOUD_PROVIDER == 'AWS'
         run: |
           aws s3 cp target/template-0.0.1-SNAPSHOT.jar s3://${{ secrets.AWS_BUCKET_NAME }}/template-0.0.1-SNAPSHOT.jar
-          # Outros comandos de implantação, como atualização de ECS, Lambda, etc.
+          # Other deployment commands, such as updating ECS, Lambda, etc.
 
       # GCP Deployment
       - name: Authenticate to Google Cloud
@@ -68,7 +65,7 @@ jobs:
         if: env.CLOUD_PROVIDER == 'GCP'
         run: |
           gsutil cp target/template-0.0.1-SNAPSHOT.jar gs://${{ secrets.GCP_BUCKET_NAME }}/template-0.0.1-SNAPSHOT.jar
-          # Outros comandos de implantação, como atualização de GKE, etc.
+          # Other deployment commands, such as updating GKE, etc.
 
       # Azure Deployment
       - name: Authenticate to Azure
