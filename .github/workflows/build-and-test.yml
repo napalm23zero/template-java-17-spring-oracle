@@ -58,8 +58,11 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
+      - name: Convert Jacoco to LCOV
+        run: mvn jacoco:report -Djacoco.outputDirectory=target/jacoco-lcov -Djacoco.formats=lc
+
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v1
         with:
-          github-token: ${{ secrets.COVERALL_TOKEN }}
-          path-to-jacoco: target/site/jacoco/jacoco.xml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: target/jacoco-lcov/jacoco.lcov
