@@ -1,0 +1,27 @@
+{
+    "properties": {
+      "appSettings": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:oracle:thin:@//oracle-db-service:1521/XE"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "TEMPLATE_APP"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "darkSide123"
+        },
+        {
+          "name": "HIBERNATE_DEFAULT_SCHEMA",
+          "value": "TEMPLATE_APP"
+        },
+        {
+          "name": "SERVER_PORT",
+          "value": "8080"
+        }
+      ]
+    }
+  }
+  

@@ -1,0 +1,96 @@
+name: Deploy to Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y openjdk-17-jdk maven git curl
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Determine cloud provider
+        run: echo "CLOUD_PROVIDER=${{ secrets.CLOUD_PROVIDER }}" >> $GITHUB_ENV
+
+      # AWS Deployment
+      - name: Configure AWS credentials
+        if: env.CLOUD_PROVIDER == 'AWS'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to AWS
+        if: env.CLOUD_PROVIDER == 'AWS'
+        run: |
+          aws s3 cp target/template-0.0.1-SNAPSHOT.jar s3://${{ secrets.AWS_BUCKET_NAME }}/template-0.0.1-SNAPSHOT.jar
+          aws ecs update-service --cluster your-cluster-name --service your-service-name --force-new-deployment
+
+      # GCP Deployment
+      - name: Authenticate to Google Cloud
+        if: env.CLOUD_PROVIDER == 'GCP'
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        if: env.CLOUD_PROVIDER == 'GCP'
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Build Docker image
+        if: env.CLOUD_PROVIDER == 'GCP'
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/template-java-17-spring-oracle:latest .
+          gcloud auth configure-docker
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/template-java-17-spring-oracle:latest
+
+      - name: Deploy to GCP
+        if: env.CLOUD_PROVIDER == 'GCP'
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --region ${{ secrets.GKE_CLUSTER_REGION }}
+          kubectl apply -f .cloud/gcp/deployment.yaml
+
+      # Azure Deployment
+      - name: Authenticate to Azure
+        if: env.CLOUD_PROVIDER == 'Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure
+        if: env.CLOUD_PROVIDER == 'Azure'
+        run: |
+          az webapp deploy --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --src-path target/template-0.0.1-SNAPSHOT.jar
+          # Outros comandos de implantação, como atualização de Azure Functions, etc.
+
+      # Heroku Deployment
+      - name: Authenticate to Heroku
+        if: env.CLOUD_PROVIDER == 'Heroku'
+        run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
+
+      - name: Deploy to Heroku
+        if: env.CLOUD_PROVIDER == 'Heroku'
+        run: |
+          heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}
+          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}

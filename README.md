@@ -52,6 +52,10 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
   - [Docker Compose Configuration](#docker-compose-configuration)
   - [Dockerfile](#dockerfile)
 - [Database Initialization](#database-initialization)
+- [Deploying the Application](#deploying-the-application)
+  - [Choosing a Cloud Provider](#choosing-a-cloud-provider)
+  - [Setting Up Secrets](#setting-up-secrets)
+    -[]
 
 ## Project Structure and Clean Architecture
 
@@ -230,5 +234,56 @@ a build stage using Maven and an execution stage using a slim Java 17 base image
 ## Database Initialization
 
 The `init.sql` file is used to initialize the Oracle database with the necessary schema and user. This file is automatically executed when the `template-oracle-db` container starts.
+
+## Deploying the Application
+
+### Choosing a Cloud Provider
+
+To deploy this application, you need to set the `CLOUD_PROVIDER` secret to one of the following values:
+
+- `AWS`
+- `GCP`
+- `Azure`
+- `Heroku`
+
+### Setting Up Secrets
+
+1. Go to the repository on GitHub.
+2. Click on `Settings`.
+3. Go to `Secrets` and click on `New repository secret`.
+4. Add the following secrets based on your chosen cloud provider:
+
+**For GCP:**
+
+- `CLOUD_PROVIDER`: `GCP`
+- `GCP_SA_KEY`
+- `GCP_PROJECT_ID`
+- `GCP_SA_EMAIL`
+- `GCP_BUCKET_NAME`
+- `GKE_CLUSTER_NAME`
+- `GKE_CLUSTER_REGION`
+
+**For AWS:**
+
+- `CLOUD_PROVIDER`: `AWS`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION`
+- `AWS_BUCKET_NAME`
+
+**For Azure:**
+
+- `CLOUD_PROVIDER`: `Azure`
+- `AZURE_CREDENTIALS`
+- `AZURE_WEBAPP_NAME`
+- `AZURE_RESOURCE_GROUP`
+
+**For Heroku:**
+
+- `CLOUD_PROVIDER`: `Heroku`
+- `HEROKU_API_KEY`
+- `HEROKU_APP_NAME`
+
+After setting up the secrets, the workflow will automatically deploy the application to the chosen cloud provider when you push changes to the main branch.
 
 Happy coding!

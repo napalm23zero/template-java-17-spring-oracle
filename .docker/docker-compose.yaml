@@ -12,11 +12,11 @@ services:
     depends_on:
       - template-oracle-db-build # Ensure the DB starts before the app
     environment: # [this is just for fun, NO PRODUCTION!] [IF PRODUCTION CHANGE IT!!!!!]
-      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//template-oracle-db-build:1521/XE # JDBC connection string
-      SPRING_DATASOURCE_USERNAME: TEMPLATE_APP # Database username
-      SPRING_DATASOURCE_PASSWORD: darkSide123 # Database password (May the dark side protect your secrets)
-      HIBERNATE_DEFAULT_SCHEMA: TEMPLATE_APP # Default schema for Hibernate
-      SERVER_PORT: 8080 # Server port
+      SPRING_DATASOURCE_URL: # JDBC connection string
+      SPRING_DATASOURCE_USERNAME: # Database username
+      SPRING_DATASOURCE_PASSWORD: # Database password
+      HIBERNATE_DEFAULT_SCHEMA: # Default schema for Hibernate
+      SERVER_PORT: # Server port
 
   template-oracle-db-build:
     container_name: template-oracle-db-build

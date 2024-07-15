@@ -1,0 +1,49 @@
+{
+    "family": "template-java-17-spring-oracle",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+      {
+        "name": "template-java-app",
+        "image": "aws_account_id.dkr.ecr.region.amazonaws.com/template-java-17-spring-oracle:latest",
+        "essential": true,
+        "memory": 512,
+        "cpu": 256,
+        "portMappings": [
+          {
+            "containerPort": 8080,
+            "hostPort": 8080
+          }
+        ],
+        "environment": [
+          {
+            "name": "SPRING_DATASOURCE_URL",
+            "value": "jdbc:oracle:thin:@//oracle-db-service:1521/XE"
+          },
+          {
+            "name": "SPRING_DATASOURCE_USERNAME",
+            "value": "TEMPLATE_APP"
+          },
+          {
+            "name": "SPRING_DATASOURCE_PASSWORD",
+            "value": "darkSide123"
+          },
+          {
+            "name": "HIBERNATE_DEFAULT_SCHEMA",
+            "value": "TEMPLATE_APP"
+          },
+          {
+            "name": "SERVER_PORT",
+            "value": "8080"
+          }
+        ]
+      }
+    ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "executionRoleArn": "arn:aws:iam::aws_account_id:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::aws_account_id:role/ecsTaskRole"
+  }
+  
