@@ -19,13 +19,13 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:oracle:thin:@//oracle-db-service:1521/XE"
+              value: "${{ secrets.SPRING_DATASOURCE_URL }}"
             - name: SPRING_DATASOURCE_USERNAME
-              value: "TEMPLATE_APP"
+              value: "${{ secrets.SPRING_DATASOURCE_USERNAME }}"
             - name: SPRING_DATASOURCE_PASSWORD
-              value: "darkSide123"
+              value: "${{ secrets.SPRING_DATASOURCE_PASSWORD }}"
             - name: HIBERNATE_DEFAULT_SCHEMA
-              value: "TEMPLATE_APP"
+              value: "${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}"
             - name: SERVER_PORT
               value: "8080"
 ---

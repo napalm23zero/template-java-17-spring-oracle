@@ -29,22 +29,18 @@ jobs:
       - name: Determine cloud provider
         run: echo "CLOUD_PROVIDER=${{ secrets.CLOUD_PROVIDER }}" >> $GITHUB_ENV
 
-      # AWS Deployment
-      - name: Configure AWS credentials
+      - name: Deploy to AWS
         if: env.CLOUD_PROVIDER == 'AWS'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Deploy to AWS
-        if: env.CLOUD_PROVIDER == 'AWS'
         run: |
           aws s3 cp target/template-0.0.1-SNAPSHOT.jar s3://${{ secrets.AWS_BUCKET_NAME }}/template-0.0.1-SNAPSHOT.jar
           aws ecs update-service --cluster your-cluster-name --service your-service-name --force-new-deployment
+          aws ecs register-task-definition --cli-input-json file://.cloud/aws/task-definition.json
 
-      # GCP Deployment
       - name: Authenticate to Google Cloud
         if: env.CLOUD_PROVIDER == 'GCP'
         uses: google-github-actions/auth@v1
@@ -71,7 +67,6 @@ jobs:
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --region ${{ secrets.GKE_CLUSTER_REGION }}
           kubectl apply -f .cloud/gcp/deployment.yaml
 
-      # Azure Deployment
       - name: Authenticate to Azure
         if: env.CLOUD_PROVIDER == 'Azure'
         uses: azure/login@v1
@@ -82,9 +77,8 @@ jobs:
         if: env.CLOUD_PROVIDER == 'Azure'
         run: |
           az webapp deploy --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --src-path target/template-0.0.1-SNAPSHOT.jar
-          # Outros comandos de implantação, como atualização de Azure Functions, etc.
+          az webapp config set --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --generic-config file://.cloud/azure/config.json
 
-      # Heroku Deployment
       - name: Authenticate to Heroku
         if: env.CLOUD_PROVIDER == 'Heroku'
         run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com

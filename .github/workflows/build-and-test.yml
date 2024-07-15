@@ -19,7 +19,7 @@ jobs:
           - 1521:1521
         options: --health-cmd="exit 0" --health-interval=10s --health-timeout=5s --health-retries=5
         env:
-          ORACLE_PASSWORD: darkSide123
+          ORACLE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           ORACLE_CHARACTERSET: AL32UTF8
 
     steps:
@@ -51,3 +51,8 @@ jobs:
 
       - name: Run tests
         run: mvn test
+        env:
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}

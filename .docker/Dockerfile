@@ -18,7 +18,7 @@ RUN mvn dependency:go-offline -B
 
 # Copy the source code and build the application
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # Stage 2: Create the final image
 # Use the same base image for Java 17
