@@ -58,28 +58,6 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
-      - name: Create jacoco2lcov conversion script
-        run: |
-          echo 'import xml.etree.ElementTree as ET' > jacoco2lcov.py
-          echo 'import sys, os' >> jacoco2lcov.py
-          echo 'os.makedirs(os.path.dirname(sys.argv[2]), exist_ok=True)' >> jacoco2lcov.py
-          echo 'tree = ET.parse(sys.argv[1])' >> jacoco2lcov.py
-          echo 'root = tree.getroot()' >> jacoco2lcov.py
-          echo 'with open(sys.argv[2], "w") as f:' >> jacoco2lcov.py
-          echo '    for package in root.findall("package"):' >> jacoco2lcov.py
-          echo '        package_name = package.get("name").replace("/", ".")' >> jacoco2lcov.py
-          echo '        for class_ in package.findall("class"):' >> jacoco2lcov.py
-          echo '            class_name = class_.get("name").replace("/", ".")' >> jacoco2lcov.py
-          echo '            for method in class_.findall("method"):' >> jacoco2lcov.py
-          echo '                method_name = method.get("name")' >> jacoco2lcov.py
-          echo '                for line in method.findall("counter"):' >> jacoco2lcov.py
-          echo '                    if line.get("type") == "LINE":' >> jacoco2lcov.py
-          echo '                        line_number = line.get("line")' >> jacoco2lcov.py
-          echo '                        covered = line.get("covered")' >> jacoco2lcov.py
-          echo '                        missed = line.get("missed")' >> jacoco2lcov.py
-          echo '                        f.write("DA:{}\\t{}\\n".format(line_number, covered))' >> jacoco2lcov.py
-          echo '    f.write("end_of_record\\n")' >> jacoco2lcov.py
-
       - name: Convert Jacoco XML to LCOV
         run: python3 jacoco2lcov.py target/site/jacoco/jacoco.xml target/jacoco-lcov/lcov.info
 
@@ -91,3 +69,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: target/jacoco-lcov/lcov.info
+
+      - name: Debug LCOV Path
+        run: echo "LCOV Path: target/jacoco-lcov/lcov.info"
