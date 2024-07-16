@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk maven git nodejs npm
+          sudo apt-get install -y openjdk-17-jdk maven git
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -40,17 +40,9 @@ jobs:
       - name: Run tests with coverage
         run: mvn test jacoco:report -Dspring.profiles.active=test
 
-      - name: Install jacoco2lcov
-        run: npm install -g jacoco2lcov
-
-      - name: Convert JaCoCo XML to LCOV
-        run: jacoco2lcov -i target/site/jacoco/jacoco.xml -o target/jacoco-lcov/lcov.info
-
-      - name: Inspect LCOV file
-        run: cat target/jacoco-lcov/lcov.info
-
       - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v1
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          path-to-lcov: target/jacoco-lcov/lcov.info
+          base-path: src/main/java
+          file: target/jacoco-report/jacoco.xml
