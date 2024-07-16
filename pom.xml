@@ -112,6 +112,8 @@
                     <sourceEncoding>UTF-8</sourceEncoding>
                     <repoToken>${env.COVERALL_TOKEN}</repoToken>
                     <reportPath>target/site/jacoco/jacoco.xml</reportPath>
+                    <serviceName>github</serviceName>
+                    <serviceJobId>${{ github.run_id }}</serviceJobId>
                 </configuration>
                 <executions>
                     <execution>
