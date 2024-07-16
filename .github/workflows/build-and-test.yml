@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk maven git
+          sudo apt-get install -y openjdk-17-jdk maven git python3 python3-pip
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -56,9 +56,13 @@ jobs:
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
       - name: Convert Jacoco XML to LCOV
-        run: mvn jacoco2lcov:convert
+        run: python3 utils/jacoco2lcov.py target/site/jacoco/jacoco.xml target/jacoco-lcov/lcov.info
+
+      - name: Inspect LCOV file
+        run: cat target/jacoco-lcov/lcov.info
 
       - name: Upload coverage to Coveralls
-        run: mvn coveralls:report
-        env:
-          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        uses: coverallsapp/github-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: target/jacoco-lcov/lcov.info

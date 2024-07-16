@@ -31,7 +31,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>test</artifactId>
         </dependency>
 
         <!-- Lombok -->
@@ -43,7 +43,7 @@
         
         <!-- JPA -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
+            <groupId>org.springframework.boot</artifactId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
@@ -91,33 +91,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.github.cukedoctor</groupId>
-                <artifactId>jacoco2lcov-maven-plugin</artifactId>
-                <version>1.0.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>convert</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <reports>
-                        <report>target/site/jacoco/jacoco.xml</report>
-                    </reports>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
-                <configuration>
-                    <sourceEncoding>UTF-8</sourceEncoding>
-                    <reportPath>target/jacoco-lcov/jacoco.lcov</reportPath>
-                    <repoToken>${env.COVERALLS_TOKEN}</repoToken>
-                </configuration>
             </plugin>
         </plugins>
     </build>
