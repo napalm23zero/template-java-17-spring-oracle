@@ -1,9 +1,13 @@
 import xml.etree.ElementTree as ET
 import sys
+import os
 
 def jacoco_to_lcov(jacoco_xml_path, lcov_output_path):
     tree = ET.parse(jacoco_xml_path)
     root = tree.getroot()
+
+    # Create the directory for the LCOV output file if it doesn't exist
+    os.makedirs(os.path.dirname(lcov_output_path), exist_ok=True)
 
     with open(lcov_output_path, 'w') as lcov_file:
         lcov_file.write('TN:\n')
