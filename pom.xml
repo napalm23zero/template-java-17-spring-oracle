@@ -84,11 +84,6 @@
                             <goal>prepare-agent</goal>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <formats>
-                                <format>xml</format>
-                            </formats>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
