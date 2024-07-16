@@ -118,23 +118,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>fr.brouillard.oss</groupId>
-				<artifactId>jacoco-badge-generator</artifactId>
-				<version>1.1.2</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<jacocoReportPath>${project.build.directory}/site/jacoco/jacoco.xml</jacocoReportPath>
-							<outputDirectory>${project.build.directory}/badges</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 </project>

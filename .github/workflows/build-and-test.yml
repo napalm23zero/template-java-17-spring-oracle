@@ -58,9 +58,6 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
-      - name: Generate Coverage Badges
-        run: mvn fr.brouillard.oss:jacoco-badge-generator:1.1.2:generate
-
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v1
         with:
