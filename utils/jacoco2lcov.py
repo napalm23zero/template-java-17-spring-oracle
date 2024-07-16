@@ -18,7 +18,9 @@ def jacoco_to_lcov(jacoco_xml_path, lcov_output_path):
                 lcov_file.write(f'SF:{package_name}/{sourcefile_name}\n')
                 for line in sourcefile.findall('line'):
                     line_number = line.get('nr')
-                    line_hits = line.get('ci')
+                    covered_instructions = int(line.get('ci'))
+                    missed_instructions = int(line.get('mi'))
+                    line_hits = covered_instructions
                     lcov_file.write(f'DA:{line_number},{line_hits}\n')
                 lcov_file.write('end_of_record\n')
 
