@@ -12,16 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      oracle:
-        image: gvenzl/oracle-xe:21.3.0-slim
-        ports:
-          - 1521:1521
-        options: --health-cmd="exit 0" --health-interval=10s --health-timeout=5s --health-retries=5
-        env:
-          ORACLE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-          ORACLE_CHARACTERSET: AL32UTF8
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -48,12 +38,7 @@ jobs:
         run: mvn clean package
 
       - name: Run tests with coverage
-        run: mvn test jacoco:report
-        env:
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-          HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
+        run: mvn test jacoco:report -Dspring.profiles.active=test
 
       - name: Convert Jacoco XML to LCOV
         run: python3 utils/jacoco2lcov.py target/site/jacoco/jacoco.xml target/jacoco-lcov/lcov.info

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.hustletech.template.adapters.exception.UserNotFoundException;
 import com.hustletech.template.application.dto.UserRequestDTO;
@@ -25,6 +26,7 @@ import com.hustletech.template.domain.entity.User;
 import com.hustletech.template.domain.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class UserServiceTest {
 
     @Mock

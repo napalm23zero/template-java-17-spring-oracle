@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.hustletech.template.application.dto.UserRequestDTO;
 import com.hustletech.template.application.dto.UserResponseDTO;
@@ -23,6 +24,7 @@ import com.hustletech.template.application.usecase.user.GetUserUseCase;
 import com.hustletech.template.application.usecase.user.UpdateUserUseCase;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class UserControllerTest {
 
     @Mock

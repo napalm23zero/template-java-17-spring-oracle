@@ -9,12 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.hustletech.template.application.dto.UserRequestDTO;
 import com.hustletech.template.application.dto.UserResponseDTO;
 import com.hustletech.template.domain.entity.User;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class UserMapperTest {
 
     private User user;
