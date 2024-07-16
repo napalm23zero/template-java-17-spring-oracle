@@ -61,7 +61,8 @@ jobs:
       - name: Create jacoco2lcov conversion script
         run: |
           echo 'import xml.etree.ElementTree as ET' > jacoco2lcov.py
-          echo 'import sys' >> jacoco2lcov.py
+          echo 'import sys, os' >> jacoco2lcov.py
+          echo 'os.makedirs(os.path.dirname(sys.argv[2]), exist_ok=True)' >> jacoco2lcov.py
           echo 'tree = ET.parse(sys.argv[1])' >> jacoco2lcov.py
           echo 'root = tree.getroot()' >> jacoco2lcov.py
           echo 'with open(sys.argv[2], "w") as f:' >> jacoco2lcov.py
