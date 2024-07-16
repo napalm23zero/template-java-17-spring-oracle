@@ -83,6 +83,9 @@ jobs:
       - name: Convert Jacoco XML to LCOV
         run: python3 jacoco2lcov.py target/site/jacoco/jacoco.xml target/jacoco-lcov/lcov.info
 
+      - name: Inspect LCOV file
+        run: cat target/jacoco-lcov/lcov.info
+
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v1
         with:
