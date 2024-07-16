@@ -95,36 +95,6 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>com.dangdang</groupId>
-                <artifactId>jacoco2lcov-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>convert</goal>
-                        </goals>
-                        <configuration>
-                            <input>target/site/jacoco/jacoco.xml</input>
-                            <output>target/jacoco-lcov/lcov.info</output>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
