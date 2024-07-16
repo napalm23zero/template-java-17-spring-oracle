@@ -10,7 +10,7 @@
 
 <p align="center">
    <img src="https://github.com/napalm23zero/template-java-17-spring-oracle/actions/workflows/build-and-test.yml/badge.svg" alt="Build and Test">
-   <img src="https://coveralls.io/repos/github/napalm23zero/template-java-17-spring-oracle/badge.svg" alt="Coverage Status">
+   <img src="https://coveralls.io/repos/github/napalm23zero/template-java-17-spring-oracle/badge.svg?branch=main" alt="Coverage Status">
 </p>
 
 <p align="center">
