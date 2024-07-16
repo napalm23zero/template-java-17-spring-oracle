@@ -45,4 +45,4 @@ jobs:
         with:
           github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
           base-path: src/main/java
-          file: target/jacoco-report/jacoco.xml
+          file: target/site/jacoco/jacoco.xml
