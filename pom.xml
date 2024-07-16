@@ -58,18 +58,6 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.1.0</version>
         </dependency>
-
-        <!-- JAXB API -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -105,24 +93,31 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>com.github.cukedoctor</groupId>
+                <artifactId>jacoco2lcov-maven-plugin</artifactId>
+                <version>1.0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>convert</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <reports>
+                        <report>target/site/jacoco/jacoco.xml</report>
+                    </reports>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
                     <sourceEncoding>UTF-8</sourceEncoding>
-                    <repoToken>${env.COVERALL_TOKEN}</repoToken>
-                    <reportPath>target/site/jacoco/jacoco.xml</reportPath>
-                    <serviceName>github</serviceName>
-                    <serviceJobId>${{ github.run_id }}</serviceJobId>
+                    <reportPath>target/jacoco-lcov/jacoco.lcov</reportPath>
+                    <repoToken>${env.COVERALLS_TOKEN}</repoToken>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

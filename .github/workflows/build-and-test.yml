@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk maven git curl
+          sudo apt-get install -y openjdk-17-jdk maven git
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -55,7 +55,10 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.HIBERNATE_DEFAULT_SCHEMA }}
 
+      - name: Convert Jacoco XML to LCOV
+        run: mvn jacoco2lcov:convert
+
       - name: Upload coverage to Coveralls
         run: mvn coveralls:report
         env:
-          COVERALL_TOKEN: ${{ secrets.COVERALL_TOKEN }}
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
