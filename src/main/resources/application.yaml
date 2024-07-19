@@ -1,31 +1,26 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@//template-oracle-db-build:1521/XE}
-    username: ${SPRING_DATASOURCE_USERNAME:TEMPLATE_APP}
-    password: ${SPRING_DATASOURCE_PASSWORD:darkSide123}
-    driverClassName: oracle.jdbc.OracleDriver
-    hikari:
-      data-source-properties:
-        oracle:
-          jdbc:
-            timezoneAsRegion: false
+    url: jdbc:oracle:thin:@${ORACLE_HOST:localhost}:${ORACLE_PORT:1521}/${ORACLE_DATABASE:template_app}
+    username: ${ORACLE_USER:template}
+    password: ${ORACLE_PASSWORD:1q2w3e4r5t6y}
+    driver-class-name: oracle.jdbc.OracleDriver
   jpa:
-    databasePlatform: org.hibernate.dialect.OracleDialect
+    database-platform: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         jdbc:
-          timeZone: UTC
-        defaultSchema: ${HIBERNATE_DEFAULT_SCHEMA:TEMPLATE_APP}
+          time_zone: UTC
+        default_schema: ${HIBERNATE_DEFAULT_SCHEMA:template}
   jackson:
     time-zone: UTC
 
 server:
   port: ${SERVER_PORT:8080}
   servlet:
-    contextPath: /api
+    context-path: /api
 
 springdoc:
   api-docs:

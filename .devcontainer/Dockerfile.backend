@@ -1,0 +1,21 @@
+# Ultimate development environment
+FROM openjdk:17-slim-bullseye
+
+# Who's the boss?
+LABEL maintainer="Rodrigo Dantas"
+LABEL email="rodrigo.dantas@hustletech.dev"
+
+# Installing a bunch of stuff because every ninja needs some tools
+RUN apt-get update && apt-get install -y maven git python3 curl 
+
+# Adding timezone setting to JVM options
+ENV JAVA_OPTS="-Duser.timezone=UTC"
+
+# Setting our workspace, where the magic happens
+WORKDIR /workspace
+
+# Exposing the most cliché port ever
+EXPOSE 8080 
+
+# Keep the container running forever, because we use devcontainers!
+CMD ["tail", "-f", "/dev/null"]

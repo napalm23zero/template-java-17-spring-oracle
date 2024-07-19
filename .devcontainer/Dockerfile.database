@@ -1,0 +1,18 @@
+FROM gvenzl/oracle-free:23-slim-faststart
+
+LABEL maintainer="Rodrigo Dantas"
+LABEL email="rodrigo.dantas@hustletech.dev"
+
+ENV ORACLE_PASSWORD=${ORACLE_PASSWORD}
+ENV ORACLE_DATABASE=${ORACLE_DATABASE}
+ENV APP_USER=${ORACLE_USER}
+ENV APP_USER_PASSWORD=${ORACLE_PASSWORD}
+
+EXPOSE 1521
+
+VOLUME ["/opt/oracle/oradata"]
+
+
+# Healthcheck to ensure the database is up and running
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5m --retries=10 \
+  CMD echo "SELECT 1 FROM DUAL;" | sqlplus -S ${ORACLE_USER}/${ORACLE_PASSWORD}@//localhost:1521/${ORACLE_DATABASE} || exit 1

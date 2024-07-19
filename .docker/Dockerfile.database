@@ -1,0 +1,14 @@
+
+FROM gvenzl/oracle-free:23-slim-faststart
+
+LABEL maintainer="Rodrigo Dantas"
+LABEL email="rodrigo.dantas@hustletech.dev"
+
+ENV ORACLE_PASSWORD=${ORACLE_PASSWORD}
+ENV ORACLE_DATABASE=${ORACLE_DATABASE}
+ENV APP_USER=${ORACLE_USER}
+ENV APP_USER_PASSWORD=${ORACLE_PASSWORD}
+
+EXPOSE 1521
+
+VOLUME ["/opt/oracle/oradata"]

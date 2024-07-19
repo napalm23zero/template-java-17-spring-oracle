@@ -1,37 +1,40 @@
 version: "3.8"
 services:
-  template-java-17-spring:
+  template-java-17-spring-devcontainer:
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: template-java-17-spring
-    image: napalm23zero/template-java-17-spring
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.backend
+    container_name: template-java-17-spring-devcontainer
+    image: napalm23zero/template-java-17-spring-devcontainer
     ports:
       - "6080:8080"
     volumes:
       - ../:/workspace
       - ${HOME}/.m2:/root/.m2
+    env_file:
+      - ../.env
     depends_on:
-      - template-oracle-db
+      template-oracle-db-devcontainer:
+        condition: service_healthy
 
-  template-oracle-db:
-    container_name: template-oracle-db
-    image: gvenzl/oracle-xe:21.3.0-slim
+  template-oracle-db-devcontainer:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.database
+    container_name: template-oracle-db-devcontainer
+    environment:
+      APP_USER: ${ORACLE_USER}
+      APP_USER_PASSWORD: ${ORACLE_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -S ${ORACLE_USER}/${ORACLE_PASSWORD}@//localhost:1521/${ORACLE_DATABASE}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
     ports:
       - "6521:1521"
-    environment:
-      ORACLE_PASSWORD: darkSide123
-      ORACLE_CHARACTERSET: AL32UTF8
-      TZ: "UTC"
     volumes:
       - oracle-data:/opt/oracle/oradata
-      - ./init.sql:/container-entrypoint-startdb.d/init.sql:ro
 
 volumes:
   oracle-data:
     driver: local
-
-networks:
-  default:
-    external:
-      name: napalm23zero
