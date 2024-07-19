@@ -14,27 +14,30 @@ services:
     env_file:
       - ../.env
     depends_on:
-      template-oracle-db-devcontainer:
-        condition: service_healthy
+      - template-oracle-db-devcontainer
 
   template-oracle-db-devcontainer:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile.database
     container_name: template-oracle-db-devcontainer
-    environment:
-      APP_USER: ${ORACLE_USER}
-      APP_USER_PASSWORD: ${ORACLE_PASSWORD}
-    healthcheck:
-      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -S ${ORACLE_USER}/${ORACLE_PASSWORD}@//localhost:1521/${ORACLE_DATABASE}"]
-      interval: 30s
-      timeout: 10s
-      retries: 10
+    restart: always
     ports:
       - "6521:1521"
     volumes:
-      - oracle-data:/opt/oracle/oradata
+      - template-oracle-db-data:/opt/oracle/oradata
+    env_file:
+      - ../.env
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+      ORACLE_DATABASE: ${ORACLE_DATABASE}
+      APP_USER: ${ORACLE_USER}
+      APP_USER_PASSWORD: ${ORACLE_PASSWORD}
 
 volumes:
-  oracle-data:
+  template-oracle-db-data:
     driver: local
+
+networks:
+  templates:
+    driver: bridge
