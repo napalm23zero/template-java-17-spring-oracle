@@ -25,7 +25,7 @@ This project uses `.env` files to manage configuration settings. The `.env` file
 ORACLE_PASSWORD=1q2w3e4r5t6y
 ORACLE_USER=template
 ORACLE_DATABASE=template_app
-ORACLE_HOST=template-oracle-db
+ORACLE_HOST=template-oracle-db-build
 ORACLE_PORT=1521
 SERVER_PORT=8080
 ```

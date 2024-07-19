@@ -1,6 +1,6 @@
-
 version: "3.8"
 services:
+
   template-java-17-spring-build:
     build:
       context: ..
@@ -20,24 +20,25 @@ services:
 
   template-oracle-db-build:
     build:
-      context: .
+      context: ..
       dockerfile: .docker/Dockerfile.database
     container_name: template-oracle-db-build
     ports:
-      - "6521:1521"
-    env_file:
-      - ../.env
+      - "1521:1521"
+    restart: always
     environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+      ORACLE_DATABASE: ${ORACLE_DATABASE}
       APP_USER: ${ORACLE_USER}
       APP_USER_PASSWORD: ${ORACLE_PASSWORD}
+    volumes:
+      - template-oracle-db-data:/opt/oracle/oradata
     healthcheck:
       test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -S ${ORACLE_USER}/${ORACLE_PASSWORD}@//localhost:1521/${ORACLE_DATABASE}"]
       interval: 30s
       timeout: 10s
       retries: 10
-    volumes:
-      - oracle-data:/opt/oracle/oradata
 
 volumes:
-  oracle-data:
+  template-oracle-db-data:
     driver: local

@@ -28,7 +28,7 @@ Create a file named `.env` in the root directory and add the following content:
 ORACLE_PASSWORD=1q2w3e4r5t6y
 ORACLE_USER=template
 ORACLE_DATABASE=template_app
-ORACLE_HOST=template-oracle-db
+ORACLE_HOST=template-oracle-db-build
 ORACLE_PORT=1521
 SERVER_PORT=8080
 ```
@@ -71,7 +71,7 @@ mvn spring-boot:run
 
 When running the application in a DevContainer, use the following connection string to access the Oracle database:
 
-- **JDBC URL:** `jdbc:oracle:thin:@//template-oracle-db:1521/template_app`
+- **JDBC URL:** `jdbc:oracle:thin:@//template-oracle-db-build:1521/template_app`
 - **Username:** `template`
 - **Password:** `1q2w3e4r5t6y`
 
