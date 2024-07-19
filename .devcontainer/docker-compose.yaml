@@ -1,34 +1,39 @@
 version: "3.8"
+
 services:
+  # Java 17 Spring Boot Development Container
+  # Where the Spring magic happens, now containerized for your coding pleasure.
   template-java-17-spring-devcontainer:
     build:
-      context: ..
+      context: .. # Yep, we're going up one directory; it's not a bug, it's a feature!
       dockerfile: .devcontainer/Dockerfile.backend
-    container_name: template-java-17-spring-devcontainer
-    image: napalm23zero/template-java-17-spring-devcontainer
+    container_name: template-java-17-spring-devcontainer # A name as long as the build time on a slow day.
+    image: napalm23zero/template-java-17-spring-devcontainer # Custom image, because default is too mainstream.
     ports:
-      - "6080:8080"
+      - "6080:8080" # Remapped to 6080 because 8080 is just too obvious.
     volumes:
-      - ../:/workspace
-      - ${HOME}/.m2:/root/.m2
+      - ../:/workspace # Your entire project, containerized!
+      - ${HOME}/.m2:/root/.m2 # Maven's cache because time is money and you know it.
     env_file:
-      - ../.env
+      - ../.env # Shh, secrets!
     depends_on:
-      - template-oracle-db-devcontainer
+      - template-oracle-db-devcontainer # Depends on Oracle, because all great things have dependencies.
 
+  # Oracle Database Development Container
+  # This is where your data wears its floaties before jumping into the pool.
   template-oracle-db-devcontainer:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile.database
-    container_name: template-oracle-db-devcontainer
-    restart: always
+    container_name: template-oracle-db-devcontainer # The bedrock of your data kingdom.
+    restart: always # Keeps coming back like a bad habit.
     ports:
-      - "6521:1521"
+      - "6521:1521" # Because sometimes, changing one digit is all the creativity you need.
     volumes:
-      - template-oracle-db-data:/opt/oracle/oradata
+      - template-oracle-db-data:/opt/oracle/oradata # Where your data sleeps at night.
     env_file:
-      - ../.env
-    environment:
+      - ../.env # More secrets, shh!
+    environment: # Use environment variables, because hardcoding is for maniacs!
       ORACLE_PASSWORD: ${ORACLE_PASSWORD}
       ORACLE_DATABASE: ${ORACLE_DATABASE}
       APP_USER: ${ORACLE_USER}
@@ -36,8 +41,8 @@ services:
 
 volumes:
   template-oracle-db-data:
-    driver: local
+    driver: local # Locally stored, because we like to keep our toys close.
 
 networks:
   templates:
-    driver: bridge
+    driver: bridge # Bridging connections like a social butterfly.

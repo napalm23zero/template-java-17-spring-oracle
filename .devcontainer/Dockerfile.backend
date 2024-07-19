@@ -1,21 +1,26 @@
 # Ultimate development environment
+# Grabbing the sleek openjdk:17-slim-bullseye because even devcontainers deserve the best.
 FROM openjdk:17-slim-bullseye
 
-# Who's the boss?
+# Rodrigo Dantas, the orchestrator of this little digital universe. Contact if you dare!
 LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
-# Installing a bunch of stuff because every ninja needs some tools
+# Installing a bunch of stuff because every ninja needs some tools.
+# Maven for building, Git for tracking, Python for scripting, and Curl for... well, curling up with your code.
 RUN apt-get update && apt-get install -y maven git python3 curl 
 
-# Adding timezone setting to JVM options
+# Setting timezone to UTC in JVM options because developers never sleep... right?
 ENV JAVA_OPTS="-Duser.timezone=UTC"
 
-# Setting our workspace, where the magic happens
+# Setting our workspace in /workspace where the magic happens (and occasionally where dreams are broken).
 WORKDIR /workspace
 
-# Exposing the most cliché port ever
+# Exposing the most cliché port ever, 8080. Because originality died when we started using frameworks.
 EXPOSE 8080 
 
-# Keep the container running forever, because we use devcontainers!
+# Keep the container running forever, because who shuts down a devcontainer? Seriously, keep working!
+# This CMD is like the developer's equivalent of leaving the TV on for background noise.
 CMD ["tail", "-f", "/dev/null"]
+
+# Note: This devcontainer is your playground. Experiment wildly, code bravely, or just casually break things to see what happens.
