@@ -37,23 +37,12 @@ public @interface HumanDateValidation {
             return validations.stream().allMatch(validation -> validation.test(birthday));
         }
 
-        /**
-         * Validates if the birthday is not null.
-         *
-         * @param birthday the birthday to validate
-         * @return true if the birthday is not null, false otherwise
-         */
+        // Validates if the birthday is not null.
         public static boolean isNotNull(LocalDate birthday) {
             return birthday != null;
         }
 
-        /**
-         * Validates if the birthday is within a humanly possible range.
-         *
-         * @param birthday the birthday to validate
-         * @return true if the birthday is within a humanly possible range, false
-         *         otherwise
-         */
+        // Validates if the birthday is within a humanly possible range.
         public static boolean isWithinHumanRange(LocalDate birthday) {
             LocalDate today = LocalDate.now();
             LocalDate veryOldHuman = today.minusYears(120);

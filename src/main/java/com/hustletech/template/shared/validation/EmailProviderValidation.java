@@ -39,33 +39,18 @@ public @interface EmailProviderValidation {
             return validations.stream().allMatch(validation -> validation.test(email));
         }
 
-        /**
-         * Validates if the email is not empty or null.
-         *
-         * @param email the email to validate
-         * @return true if the email is not empty or null, false otherwise
-         */
+        // Validates if the email is not empty or null.
         public static boolean isNotEmpty(String email) {
             return email != null && !email.trim().isEmpty();
         }
 
-        /**
-         * Validates if the email has a valid format.
-         *
-         * @param email the email to validate
-         * @return true if the email has a valid format, false otherwise
-         */
+        // Validates if the email has a valid format.
         public static boolean hasValidFormat(String email) {
             String[] parts = email.split("@");
             return parts.length == 2;
         }
 
-        /**
-         * Validates if the email is from a valid provider.
-         *
-         * @param email the email to validate
-         * @return true if the email is from a valid provider, false otherwise
-         */
+        // Validates if the email is from a valid provider.
         public static boolean isValidProvider(String email) {
             String domain = email.split("@")[1];
             for (String provider : validProviders) {

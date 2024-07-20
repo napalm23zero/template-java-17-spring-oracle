@@ -35,23 +35,12 @@ public @interface NameValidation {
             return validations.stream().allMatch(validation -> validation.test(name));
         }
 
-        /**
-         * Validates if the name is not empty or null.
-         *
-         * @param name the name to validate
-         * @return true if the name is not empty or null, false otherwise
-         */
+        // Validates if the name is not empty or null.
         public static boolean isNotEmpty(String name) {
             return name != null && !name.trim().isEmpty();
         }
 
-        /**
-         * Validates if the name contains at least a first name and a surname.
-         *
-         * @param name the name to validate
-         * @return true if the name contains at least a first name and a surname, false
-         *         otherwise
-         */
+        // Validates if the name contains at least a first name and a surname.
         public static boolean containsFirstNameAndSurname(String name) {
             String[] parts = name.trim().split("\\s+");
             return parts.length >= 2;
