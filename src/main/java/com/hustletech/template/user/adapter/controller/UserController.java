@@ -1,17 +1,18 @@
-package com.hustletech.template.adapters.controller;
+package com.hustletech.template.user.adapter.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hustletech.template.application.dto.UserFilterDTO;
-import com.hustletech.template.application.dto.UserRequestDTO;
-import com.hustletech.template.application.dto.UserResponseDTO;
-import com.hustletech.template.application.usecase.user.CreateUserUseCase;
-import com.hustletech.template.application.usecase.user.DeleteUserUseCase;
-import com.hustletech.template.application.usecase.user.FindUserUseCase;
-import com.hustletech.template.application.usecase.user.GetUserUseCase;
-import com.hustletech.template.application.usecase.user.UpdateUserUseCase;
+import com.hustletech.template.adapters.controller._GenericController;
 import com.hustletech.template.domain.entity.User;
+import com.hustletech.template.user.application.dto.UserFilterDTO;
+import com.hustletech.template.user.application.dto.UserRequestDTO;
+import com.hustletech.template.user.application.dto.UserResponseDTO;
+import com.hustletech.template.user.application.usecase.CreateUserUseCase;
+import com.hustletech.template.user.application.usecase.DeleteUserUseCase;
+import com.hustletech.template.user.application.usecase.FindUserUseCase;
+import com.hustletech.template.user.application.usecase.GetUserUseCase;
+import com.hustletech.template.user.application.usecase.UpdateUserUseCase;
 
 @RestController
 @RequestMapping("/users")

@@ -1,4 +1,4 @@
-package com.hustletech.template.adapters.exception;
+package com.hustletech.template.shared.exception;
 
 import java.util.HashMap;
 import java.util.Map;

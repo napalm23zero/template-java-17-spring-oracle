@@ -19,11 +19,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.hustletech.template.adapters.exception.UserNotFoundException;
-import com.hustletech.template.application.dto.UserRequestDTO;
-import com.hustletech.template.application.dto.UserResponseDTO;
-import com.hustletech.template.application.mapper.UserMapper;
 import com.hustletech.template.domain.entity.User;
 import com.hustletech.template.domain.repository.UserRepository;
+import com.hustletech.template.user.adapter.service.UserService;
+import com.hustletech.template.user.application.dto.UserRequestDTO;
+import com.hustletech.template.user.application.dto.UserResponseDTO;
+import com.hustletech.template.user.application.mapper.UserMapper;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")

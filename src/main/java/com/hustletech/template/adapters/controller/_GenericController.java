@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.hustletech.template.adapters.utils.ParseSortUtils;
+import com.hustletech.template.shared.utils.ParseSortUtils;
 
 import lombok.RequiredArgsConstructor;
 

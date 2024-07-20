@@ -1,4 +1,4 @@
-package com.hustletech.template.adapters.utils;
+package com.hustletech.template.shared.utils;
 
 import org.springframework.data.domain.Sort;
 

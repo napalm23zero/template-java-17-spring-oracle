@@ -14,12 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.hustletech.template.application.dto.UserRequestDTO;
-import com.hustletech.template.application.dto.UserResponseDTO;
-import com.hustletech.template.application.usecase.user.CreateUserUseCase;
-import com.hustletech.template.application.usecase.user.DeleteUserUseCase;
-import com.hustletech.template.application.usecase.user.GetUserUseCase;
-import com.hustletech.template.application.usecase.user.UpdateUserUseCase;
+import com.hustletech.template.user.adapter.controller.UserController;
+import com.hustletech.template.user.application.dto.UserRequestDTO;
+import com.hustletech.template.user.application.dto.UserResponseDTO;
+import com.hustletech.template.user.application.usecase.CreateUserUseCase;
+import com.hustletech.template.user.application.usecase.DeleteUserUseCase;
+import com.hustletech.template.user.application.usecase.GetUserUseCase;
+import com.hustletech.template.user.application.usecase.UpdateUserUseCase;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")

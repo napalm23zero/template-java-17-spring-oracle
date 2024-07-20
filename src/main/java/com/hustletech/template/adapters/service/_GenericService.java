@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hustletech.template.adapters.exception.NotFoundException;
 import com.hustletech.template.application.mapper._GenericMapper;
 import com.hustletech.template.domain.specification._GenericSpecification;
+import com.hustletech.template.shared.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

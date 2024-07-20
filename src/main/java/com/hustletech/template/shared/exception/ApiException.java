@@ -1,4 +1,4 @@
-package com.hustletech.template.adapters.exception;
+package com.hustletech.template.shared.exception;
 
 import org.springframework.http.HttpStatus;
 

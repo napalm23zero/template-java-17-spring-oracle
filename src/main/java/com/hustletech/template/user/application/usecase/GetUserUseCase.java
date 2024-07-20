@@ -1,9 +1,9 @@
-package com.hustletech.template.application.usecase.user;
+package com.hustletech.template.user.application.usecase;
 
 import org.springframework.stereotype.Component;
 
-import com.hustletech.template.adapters.service.UserService;
-import com.hustletech.template.application.dto.UserResponseDTO;
+import com.hustletech.template.user.adapter.service.UserService;
+import com.hustletech.template.user.application.dto.UserResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 

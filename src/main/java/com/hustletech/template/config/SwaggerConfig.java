@@ -1,4 +1,4 @@
-package com.hustletech.template.infrastructure.config;
+package com.hustletech.template.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

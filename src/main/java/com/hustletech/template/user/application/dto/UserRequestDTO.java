@@ -1,4 +1,4 @@
-package com.hustletech.template.application.dto;
+package com.hustletech.template.user.application.dto;
 
 import java.time.LocalDate;
 
