@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "users")
-public class User extends GenericEntity {
+@Table(name = "persons")
+public class Person extends GenericEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
