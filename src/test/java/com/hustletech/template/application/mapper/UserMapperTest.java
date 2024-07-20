@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -19,6 +20,8 @@ import com.hustletech.template.user.application.mapper.UserMapper;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 class UserMapperTest {
+
+    private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     private User user;
     private UserRequestDTO userRequestDTO;
@@ -50,10 +53,10 @@ class UserMapperTest {
 
     @Test
     void testToEntity_Success() {
-        // act
-        User result = UserMapper.toEntity(userRequestDTO);
+        // Act
+        User result = userMapper.requestDtoToEntity(userRequestDTO);
 
-        // assert
+        // Assert
         assertEquals(userRequestDTO.getName(), result.getName());
         assertEquals(userRequestDTO.getEmail(), result.getEmail());
         assertEquals(userRequestDTO.getBirthday(), result.getBirthday());
@@ -61,10 +64,10 @@ class UserMapperTest {
 
     @Test
     void testToResponseDTO_Success() {
-        // act
-        UserResponseDTO result = UserMapper.toResponseDTO(user);
+        // Act
+        UserResponseDTO result = userMapper.entityToResponseDto(user);
 
-        // assert
+        // Assert
         assertEquals(user.getId(), result.getId());
         assertEquals(user.getName(), result.getName());
         assertEquals(user.getEmail(), result.getEmail());

@@ -18,9 +18,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.hustletech.template.adapters.exception.UserNotFoundException;
 import com.hustletech.template.domain.entity.User;
 import com.hustletech.template.domain.repository.UserRepository;
+import com.hustletech.template.shared.exception.NotFoundException;
 import com.hustletech.template.user.adapter.service.UserService;
 import com.hustletech.template.user.application.dto.UserRequestDTO;
 import com.hustletech.template.user.application.dto.UserResponseDTO;
@@ -32,6 +32,9 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private UserMapper userMapper;
 
     @InjectMocks
     private UserService userService;
@@ -53,55 +56,63 @@ class UserServiceTest {
         userRequestDTO.setEmail("peter.parker@dailybugle.com");
         userRequestDTO.setBirthday(LocalDate.of(2001, 8, 10));
 
-        userResponseDTO = UserMapper.toResponseDTO(user);
+        userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(1L);
+        userResponseDTO.setName("Peter Parker");
+        userResponseDTO.setEmail("peter.parker@dailybugle.com");
+        userResponseDTO.setBirthday(LocalDate.of(2001, 8, 10));
     }
 
     @Test
     void testGetUser_Success() {
-        // arrange
+        // Arrange
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userMapper.entityToResponseDto(user)).thenReturn(userResponseDTO);
 
-        // act
+        // Act
         UserResponseDTO result = userService.get(1L);
 
-        // assert
+        // Assert
         assertEquals(userResponseDTO, result);
         verify(userRepository, times(1)).findById(1L);
     }
 
     @Test
     void testGetUser_NotFound() {
-        // arrange
+        // Arrange
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // act & assert
-        UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> userService.get(1L));
-        assertEquals("User not found with id: 1", exception.getMessage());
+        // Act & Assert
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> userService.get(1L));
+        assertEquals("User with ID 1 not found", exception.getMessage());
     }
 
     @Test
     void testCreateUser_Success() {
-        // arrange
+        // Arrange
+        when(userMapper.requestDtoToEntity(userRequestDTO)).thenReturn(user);
         when(userRepository.save(any(User.class))).thenReturn(user);
+        when(userMapper.entityToResponseDto(user)).thenReturn(userResponseDTO);
 
-        // act
+        // Act
         UserResponseDTO result = userService.create(userRequestDTO);
 
-        // assert
+        // Assert
         assertEquals(userResponseDTO, result);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testUpdateUser_Success() {
-        // arrange
+        // Arrange
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
+        when(userMapper.entityToResponseDto(user)).thenReturn(userResponseDTO);
 
-        // act
+        // Act
         UserResponseDTO result = userService.update(1L, userRequestDTO);
 
-        // assert
+        // Assert
         assertEquals(userResponseDTO, result);
         verify(userRepository, times(1)).findById(1L);
         verify(userRepository, times(1)).save(any(User.class));
@@ -109,35 +120,35 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser_NotFound() {
-        // arrange
+        // Arrange
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // act & assert
-        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+        // Act & Assert
+        NotFoundException exception = assertThrows(NotFoundException.class,
                 () -> userService.update(1L, userRequestDTO));
-        assertEquals("User not found with id: 1", exception.getMessage());
+        assertEquals("User with ID 1 not found", exception.getMessage());
     }
 
     @Test
     void testDeleteUser_Success() {
-        // arrange
-        when(userRepository.existsById(1L)).thenReturn(true);
+        // Arrange
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        // act
+        // Act
         userService.delete(1L);
 
-        // assert
-        verify(userRepository, times(1)).existsById(1L);
+        // Assert
+        verify(userRepository, times(1)).findById(1L);
         verify(userRepository, times(1)).deleteById(1L);
     }
 
     @Test
     void testDeleteUser_NotFound() {
-        // arrange
-        when(userRepository.existsById(1L)).thenReturn(false);
+        // Arrange
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // act & assert
-        UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> userService.delete(1L));
-        assertEquals("User not found with id: 1", exception.getMessage());
+        // Act & Assert
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> userService.delete(1L));
+        assertEquals("User with ID 1 not found", exception.getMessage());
     }
 }

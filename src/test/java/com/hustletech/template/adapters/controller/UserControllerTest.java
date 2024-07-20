@@ -1,7 +1,9 @@
 package com.hustletech.template.adapters.controller;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ import com.hustletech.template.user.application.dto.UserRequestDTO;
 import com.hustletech.template.user.application.dto.UserResponseDTO;
 import com.hustletech.template.user.application.usecase.CreateUserUseCase;
 import com.hustletech.template.user.application.usecase.DeleteUserUseCase;
+import com.hustletech.template.user.application.usecase.FindUserUseCase;
 import com.hustletech.template.user.application.usecase.GetUserUseCase;
 import com.hustletech.template.user.application.usecase.UpdateUserUseCase;
 
@@ -37,6 +40,9 @@ class UserControllerTest {
 
     @Mock
     private GetUserUseCase getUserUseCase;
+
+    @Mock
+    private FindUserUseCase findUserUseCase;
 
     @InjectMocks
     private UserController userController;
@@ -64,7 +70,7 @@ class UserControllerTest {
         when(createUserUseCase.execute(any(UserRequestDTO.class))).thenReturn(userResponseDTO);
 
         // Act
-        UserResponseDTO response = userController.createUser(userRequestDTO);
+        UserResponseDTO response = userController.createEntity(userRequestDTO);
 
         // Assert
         assertEquals(userResponseDTO, response);
@@ -76,7 +82,7 @@ class UserControllerTest {
         when(updateUserUseCase.execute(any(Long.class), any(UserRequestDTO.class))).thenReturn(userResponseDTO);
 
         // Act
-        UserResponseDTO response = userController.updateUser(1L, userRequestDTO);
+        UserResponseDTO response = userController.updateEntity(1L, userRequestDTO);
 
         // Assert
         assertEquals(userResponseDTO, response);
@@ -84,10 +90,11 @@ class UserControllerTest {
 
     @Test
     void testDeleteUser_Success() {
-        // Act and Assert
-        // This method does not return a value; verifying no exceptions are thrown is
-        // sufficient.
-        // Assert that no exception is thrown with assertDoesNotThrow if needed.
+        // Arrange
+        doNothing().when(deleteUserUseCase).execute(any(Long.class));
+
+        // Act & Assert
+        assertDoesNotThrow(() -> userController.deleteEntity(1L));
     }
 
     @Test
@@ -96,7 +103,7 @@ class UserControllerTest {
         when(getUserUseCase.execute(any(Long.class))).thenReturn(userResponseDTO);
 
         // Act
-        UserResponseDTO response = userController.getUser(1L);
+        UserResponseDTO response = userController.getEntity(1L);
 
         // Assert
         assertEquals(userResponseDTO, response);
