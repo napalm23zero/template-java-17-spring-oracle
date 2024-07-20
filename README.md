@@ -97,11 +97,15 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
       - [Entity](docs/THEORY.md#entity)
       - [Repository](docs/THEORY.md#repository)
       - [Specification](docs/THEORY.md#specification)
+    - [Shared Layer](docs/THEORY.md#shared-layer)
+      - [Exception](docs/THEORY.md#exception-1)
+      - [Validation](docs/THEORY.md#validation)
+      - [Utils](docs/THEORY.md#utils)
     - [Infrastructure Layer](docs/THEORY.md#infrastructure-layer)
       - [Config](docs/THEORY.md#config)
     - [SOLID Principles Applied](docs/THEORY.md#solid-principles-applied)
 
-## Usage
+## Usage & Deploy
 
 - [Running the Application with Docker Compose](docs/USAGE_DOCKER.md)
 

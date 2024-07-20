@@ -15,6 +15,11 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Template API")
                         .version("1.0")
+                        .summary("Template API")
+                        .contact(new io.swagger.v3.oas.models.info.Contact()
+                                .email("rodrigo.dantas@hustletech.dev")
+                                .name("Rodrigo Dantas")
+                                .url("https://github.com/napalm23zero"))
                         .description("API documentation for the Template Java 17 Spring Oracle project"));
     }
 }

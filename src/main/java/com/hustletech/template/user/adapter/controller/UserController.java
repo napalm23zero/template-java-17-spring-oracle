@@ -28,6 +28,7 @@ public class UserController extends _GenericController<User, UserRequestDTO, Use
                 updateUserUseCase::execute,
                 deleteUserUseCase::execute,
                 getUserUseCase::execute,
-                findUserUseCase::execute);
+                findUserUseCase::execute,
+                UserFilterDTO.class);
     }
 }

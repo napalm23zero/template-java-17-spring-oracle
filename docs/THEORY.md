@@ -45,6 +45,17 @@ src/
                     │   └── specification/
                     │       ├── _GenericSpecification.java
                     │       └── UserSpecification.java
+                    ├── shared/
+                    │   ├── exception/
+                    │   │   ├── ApiException.java
+                    │   │   ├── GlobalExceptionHandler.java
+                    │   │   └── NotFoundException.java
+                    │   ├── validation/
+                    │   │   ├── NameValidation.java
+                    │   │   ├── EmailProviderValidation.java
+                    │   │   └── HumanDateValidation.java
+                    │   └── utils/
+                    │       └── ParseSortUtils.java
                     └── infrastructure/
                         └── config/
                             ├── DatabaseConfig.java
@@ -70,6 +81,12 @@ src/
 - **Entity:** Classes like `GenericEntity` and `User` represent the core business entities of the application. They are the most stable and central part of the application.
 - **Repository:** The `UserRepository` interface defines the contract for data access, ensuring that the domain layer is not dependent on the data access layer's implementation details.
 - **Specification:** Classes like `_GenericSpecification` and `UserSpecification` are used for defining criteria for querying the data.
+
+### Shared Layer
+
+- **Exception:** Centralized exception handling classes like `ApiException`, `GlobalExceptionHandler`, and `NotFoundException`.
+- **Validation:** Custom validators such as `NameValidation`, `EmailProviderValidation`, and `HumanDateValidation` are used for validating fields in DTOs.
+- **Utils:** Utility classes like `ParseSortUtils` provide common utility functions that can be used across the application.
 
 ### Infrastructure Layer
 

@@ -2,25 +2,26 @@ package com.hustletech.template.user.application.dto;
 
 import java.time.LocalDate;
 
-import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hustletech.template.shared.validation.EmailProviderValidation;
+import com.hustletech.template.shared.validation.HumanDateValidation;
+import com.hustletech.template.shared.validation.NameValidation;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 public class UserRequestDTO {
-    @NotBlank(message = "Name cannot be empty.")
-    @Length(min = 2, max = 100, message = "Name must be between 2 and 100 characters.")
+    @NameValidation
+    @Schema(description = "Name of the user", example = "Peter Parker")
     private String name;
 
-    @NotBlank(message = "Email cannot be empty.")
-    @Email(message = "Email must be a valid email address.")
+    @EmailProviderValidation
+    @Schema(description = "Email of the user", example = "peter.parker@dailybugle.com")
     private String email;
 
-    @NotNull(message = "Birthday cannot be null.")
-    @Past(message = "Birthday must be in the past.")
+    @HumanDateValidation
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Schema(description = "Birthday of the user", example = "2001-08-10")
     private LocalDate birthday;
 }

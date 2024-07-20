@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.hustletech.template.shared.utils.ParseSortUtils;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Validated
@@ -33,16 +34,17 @@ public abstract class _GenericController<Entity, RequestDTO, ResponseDTO, Filter
     private final Consumer<ID> deleteUseCase;
     private final Function<ID, ResponseDTO> getUseCase;
     private final BiFunction<FilterDTO, Pageable, Page<ResponseDTO>> findUseCase;
+    private final Class<FilterDTO> filterClass;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO createEntity(@RequestBody RequestDTO requestDTO) {
+    public ResponseDTO createEntity(@Valid @RequestBody RequestDTO requestDTO) {
         return createUseCase.apply(requestDTO);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDTO updateEntity(@PathVariable ID id, @RequestBody RequestDTO requestDTO) {
+    public ResponseDTO updateEntity(@PathVariable ID id, @Valid @RequestBody RequestDTO requestDTO) {
         return updateUseCase.apply(id, requestDTO);
     }
 
@@ -58,12 +60,20 @@ public abstract class _GenericController<Entity, RequestDTO, ResponseDTO, Filter
         return getUseCase.apply(id);
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public ResponseEntity<Page<ResponseDTO>> searchEntities(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sort", defaultValue = "id,asc") String sort,
-            @RequestBody(required = false) FilterDTO filter) {
+            @RequestParam(required = false) FilterDTO filter) {
+
+        if (filter == null) {
+            try {
+                filter = filterClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to create an instance of filter class", e);
+            }
+        }
 
         Sort sortObj = ParseSortUtils.parseSortParameter(sort);
         Pageable pageable = PageRequest.of(page, size, sortObj);

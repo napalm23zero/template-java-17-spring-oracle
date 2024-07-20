@@ -1,32 +1,32 @@
 package com.hustletech.template.shared.utils;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 
 public class ParseSortUtils {
 
-    /**
-     * Parses a sorting parameter string into a Spring Data Sort object.
-     * The string is expected to contain multiple entries separated by commas,
-     * where each entry consists of a field name followed by a space and a sort
-     * direction (asc or desc).
-     * 
-     * @param sort String containing the sort criteria.
-     * @return Sort object representing the sorting parameters.
-     */
     public static Sort parseSortParameter(String sort) {
-        String[] sortFields = sort.split(",");
-        Sort finalSort = Sort.unsorted();
-        for (String fieldSort : sortFields) {
-            String[] split = fieldSort.trim().split(" ");
-            if (split.length == 2) {
-                String field = split[0];
-                Sort.Direction direction = Sort.Direction.fromString(split[1]);
-                finalSort = finalSort.and(Sort.by(direction, field));
-            } else {
-                throw new IllegalArgumentException("Invalid sort parameter format");
-            }
+        if (!StringUtils.hasText(sort)) {
+            return Sort.unsorted();
         }
-        return finalSort;
-    }
 
+        String[] sortParams = sort.split(",");
+        if (sortParams.length % 2 != 0) {
+            throw new IllegalArgumentException("Invalid sort parameter format");
+        }
+
+        Sort.Order[] orders = new Sort.Order[sortParams.length / 2];
+        for (int i = 0; i < sortParams.length; i += 2) {
+            String property = sortParams[i];
+            Sort.Direction direction;
+            try {
+                direction = Sort.Direction.fromString(sortParams[i + 1]);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid sort direction: " + sortParams[i + 1]);
+            }
+            orders[i / 2] = new Sort.Order(direction, property);
+        }
+
+        return Sort.by(orders);
+    }
 }
