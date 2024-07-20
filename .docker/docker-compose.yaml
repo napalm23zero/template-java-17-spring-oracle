@@ -13,7 +13,7 @@ services:
     volumes:
       - ${HOME}/.m2:/root/.m2 # Mounting Maven's home to avoid downloading the internet every build.
     env_file:
-      - ../.env # Environment secrets, shhh!
+      - .env # Environment secrets, shhh!
     depends_on:
       template-oracle-db-build:
         condition: service_healthy # Dependency says: "No healthy DB, no app startup!"
@@ -35,7 +35,7 @@ services:
     volumes:
       - template-oracle-db-data:/opt/oracle/oradata # Persisting data because amnesia is bad for databases.
     env_file:
-      - ../.env # More secrets, shhh!
+      - .env # More secrets, shhh!
     healthcheck: # Checking the DB's pulse to make sure it's alive and kicking.
       test:
         [

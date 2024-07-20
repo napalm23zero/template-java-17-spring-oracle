@@ -6,10 +6,10 @@ import com.hustletech.template.adapters.service.UserService;
 import com.hustletech.template.application.dto.UserRequestDTO;
 import com.hustletech.template.application.dto.UserResponseDTO;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UpdateUserUseCase {
 
     private final UserService userService;

@@ -4,10 +4,10 @@ import org.springframework.stereotype.Component;
 
 import com.hustletech.template.adapters.service.UserService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DeleteUserUseCase {
 
     private final UserService userService;

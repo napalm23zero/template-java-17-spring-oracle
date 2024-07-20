@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   # Java 17 Spring Boot Development Container
@@ -15,7 +15,7 @@ services:
       - ../:/workspace # Your entire project, containerized!
       - ${HOME}/.m2:/root/.m2 # Maven's cache because time is money and you know it.
     env_file:
-      - ../.env # Shh, secrets!
+      - .env # Shh, secrets!
     depends_on:
       - template-oracle-db-devcontainer # Depends on Oracle, because all great things have dependencies.
 
@@ -32,7 +32,7 @@ services:
     volumes:
       - template-oracle-db-data:/opt/oracle/oradata # Where your data sleeps at night.
     env_file:
-      - ../.env # More secrets, shh!
+      - .env # More secrets, shh!
     environment: # Use environment variables, because hardcoding is for maniacs!
       ORACLE_PASSWORD: ${ORACLE_PASSWORD}
       ORACLE_DATABASE: ${ORACLE_DATABASE}
