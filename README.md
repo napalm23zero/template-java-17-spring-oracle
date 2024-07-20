@@ -70,15 +70,32 @@ Hello, I'm **Rodrigo Dantas**, the tech nerd behind this project. With a passion
 
 I'm here to help, so don't hesitate to contact me via email or any of my social networks. Let's embark on this coding adventure together!
 
-
 # Table of Contents
 
 ## Theory
+
 - [Project Structure and Clean Architecture](docs/THEORY.md#project-structure)
-- [Clean Architecture and SOLID Principles](docs/THEORY.md#explanation-of-cleanarchitectureandsolic-principles)
+  - [Project Structure](docs/THEORY.md#project-structure-1)
+  - [Explanation of Clean Architecture and SOLID Principles](docs/THEORY.md#explanation-of-clean-architecture-and-solid-principles)
+    - [Adapters Layer](docs/THEORY.md#adapters-layer)
+      - [Controller](docs/THEORY.md#controller)
+      - [Exception](docs/THEORY.md#exception)
+    - [Application Layer](docs/THEORY.md#application-layer)
+      - [DTO (Data Transfer Object)](docs/THEORY.md#dto-data-transfer-object)
+      - [Mapper](docs/THEORY.md#mapper)
+      - [Use Case](docs/THEORY.md#use-case)
+    - [Domain Layer](docs/THEORY.md#domain-layer)
+      - [Entity](docs/THEORY.md#entity)
+      - [Repository](docs/THEORY.md#repository)
+      - [Specification](docs/THEORY.md#specification)
+    - [Infrastructure Layer](docs/THEORY.md#infrastructure-layer)
+      - [Config](docs/THEORY.md#config)
+    - [SOLID Principles Applied](docs/THEORY.md#solid-principles-applied)
 
 ## Usage
+
 - [Running the Application with Docker Compose](docs/USAGE_DOCKER.md)
+
   - [Prerequisites](docs/USAGE_DOCKER.md#prerequisites)
   - [Step 1: Clone the Repository](docs/USAGE_DOCKER.md#step-1-clone-the-repository)
   - [Step 2: Configure Environment Variables](docs/USAGE_DOCKER.md#step-2-configure-environment-variables)
@@ -88,6 +105,7 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
   - [Database Access](docs/USAGE_DOCKER.md#database-access)
 
 - [Running the Application in a DevContainer](docs/USAGE_DEVCONTAINER.md)
+
   - [Prerequisites](docs/USAGE_DEVCONTAINER.md#prerequisites)
   - [Step 1: Clone the Repository](docs/USAGE_DEVCONTAINER.md#step-1-clone-the-repository)
   - [Step 2: Configure Environment Variables](docs/USAGE_DEVCONTAINER.md#step-2-configure-environment-variables)
@@ -109,6 +127,5 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
     - [Deployment Workflow](docs/USAGE_DEPLOY.md#deployment-workflow)
     - [How It Works](docs/USAGE_DEPLOY.md#how-it-works)
     - [How to Check the Deployment Workflow](docs/USAGE_DEPLOY.md#how-to-check-the-deployment-workflow)
-
 
 Happy coding!

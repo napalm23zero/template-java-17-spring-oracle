@@ -15,27 +15,36 @@ src/
                     │   ├── controller/
                     │   │   ├── UserController.java
                     │   │   └── exception/
-                    │   │       ├── UserNotFoundException.java
+                    │   │       ├── GlobalExceptionHandler.java
+                    │   │       ├── ApiException.java
+                    │   │       └── NotFoundException.java
                     │   ├── service/
-                    │       ├── UserService.java
+                    │   │   ├── UserService.java
+                    │   │   └── _GenericService.java
                     ├── application/
                     │   ├── dto/
                     │   │   ├── UserRequestDTO.java
-                    │   │   └── UserResponseDTO.java
+                    │   │   ├── UserResponseDTO.java
+                    │   │   └── UserFilterDTO.java
                     │   ├── mapper/
-                    │   │   └── UserMapper.java
+                    │   │   ├── UserMapper.java
+                    │   │   └── _GenericMapper.java
                     │   └── usecase/
                     │       └── user/
                     │           ├── CreateUserUseCase.java
                     │           ├── DeleteUserUseCase.java
                     │           ├── GetUserUseCase.java
-                    │           └── UpdateUserUseCase.java
+                    │           ├── UpdateUserUseCase.java
+                    │           └── FindUserUseCase.java
                     ├── domain/
                     │   ├── entity/
                     │   │   ├── GenericEntity.java
                     │   │   └── User.java
-                    │   └── repository/
-                    │       └── UserRepository.java
+                    │   ├── repository/
+                    │   │   └── UserRepository.java
+                    │   └── specification/
+                    │       ├── _GenericSpecification.java
+                    │       └── UserSpecification.java
                     └── infrastructure/
                         └── config/
                             ├── DatabaseConfig.java
@@ -48,18 +57,19 @@ src/
 ### Adapters Layer
 
 - **Controller:** The `UserController` class handles HTTP requests and maps them to the appropriate use cases. It serves as an interface adapter that translates user actions into application actions.
-- **Exception:** The `UserNotFoundException` class is used to handle specific exceptions related to user operations.
+- **Exception:** The `GlobalExceptionHandler`, `ApiException`, and `NotFoundException` classes handle specific exceptions related to various operations.
 
 ### Application Layer
 
-- **DTO (Data Transfer Object):** Classes like `UserRequestDTO` and `UserResponseDTO` are used to transfer data between the layers. They ensure that the internal domain models are not exposed to the external world.
-- **Mapper:** The `UserMapper` class is responsible for mapping between domain models and DTOs, facilitating data transformation and ensuring separation of concerns.
-- **Use Case:** The use cases (`CreateUserUseCase`, `DeleteUserUseCase`, `GetUserUseCase`, `UpdateUserUseCase`) encapsulate the business logic and application-specific rules. They orchestrate the execution of business rules without being influenced by the delivery mechanism.
+- **DTO (Data Transfer Object):** Classes like `UserRequestDTO`, `UserResponseDTO`, and `UserFilterDTO` are used to transfer data between the layers. They ensure that the internal domain models are not exposed to the external world.
+- **Mapper:** The `UserMapper` and `_GenericMapper` classes are responsible for mapping between domain models and DTOs, facilitating data transformation and ensuring separation of concerns.
+- **Use Case:** The use cases (`CreateUserUseCase`, `DeleteUserUseCase`, `GetUserUseCase`, `UpdateUserUseCase`, `FindUserUseCase`) encapsulate the business logic and application-specific rules. They orchestrate the execution of business rules without being influenced by the delivery mechanism.
 
 ### Domain Layer
 
 - **Entity:** Classes like `GenericEntity` and `User` represent the core business entities of the application. They are the most stable and central part of the application.
 - **Repository:** The `UserRepository` interface defines the contract for data access, ensuring that the domain layer is not dependent on the data access layer's implementation details.
+- **Specification:** Classes like `_GenericSpecification` and `UserSpecification` are used for defining criteria for querying the data.
 
 ### Infrastructure Layer
 
