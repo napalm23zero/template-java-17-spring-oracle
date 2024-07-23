@@ -103,6 +103,17 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
       - [Utils](docs/THEORY.md#utils)
     - [Infrastructure Layer](docs/THEORY.md#infrastructure-layer)
       - [Config](docs/THEORY.md#config)
+    - [Authentication Workflow](docs/USAGE_AUTH.md)
+      - [Overview](docs/USAGE_AUTH.md#overview)
+      - [Authentication Process](docs/USAGE_AUTH.md#authentication-process)
+        - [Step 1: User Login](docs/USAGE_AUTH.md#step-1-user-login)
+        - [Step 2: JWT Token Generation](docs/USAGE_AUTH.md#step-2-jwt-token-generation)
+        - [Step 3: Token Validation](docs/USAGE_AUTH.md#step-3-token-validation)
+        - [Step 4: Secure Access](docs/USAGE_AUTH.md#step-4-secure-access)
+      - [Configuration](docs/USAGE_AUTH.md#configuration)
+        - [JWT Properties](docs/USAGE_AUTH.md#jwt-properties)
+        - [Security Configuration](docs/USAGE_AUTH.md#security-configuration)
+      - [Testing Authentication](docs/USAGE_AUTH.md#testing-authentication)
     - [SOLID Principles Applied](docs/THEORY.md#solid-principles-applied)
 
 ## Usage & Deploy
