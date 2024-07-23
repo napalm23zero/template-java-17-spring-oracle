@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.hustletech.template.shared.utils.ParseSortUtils;
+import com.hustletech.template.shared.utils.ParseSortUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -75,7 +75,7 @@ public abstract class _GenericController<Entity, RequestDTO, ResponseDTO, Filter
             }
         }
 
-        Sort sortObj = ParseSortUtils.parseSortParameter(sort);
+        Sort sortObj = ParseSortUtil.parseSortParameter(sort);
         Pageable pageable = PageRequest.of(page, size, sortObj);
 
         Page<ResponseDTO> resultPage = findUseCase.apply(filter, pageable);

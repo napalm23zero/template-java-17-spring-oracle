@@ -13,54 +13,78 @@ src/
                 └── template/
                     ├── adapters/
                     │   ├── controller/
-                    │   │   ├── UserController.java
+                    │   │   ├── PersonController.java
+                    │   │   ├── _GenericController.java
                     │   │   └── exception/
                     │   │       ├── GlobalExceptionHandler.java
                     │   │       ├── ApiException.java
                     │   │       └── NotFoundException.java
                     │   ├── service/
+                    │   │   ├── PersonService.java
                     │   │   ├── UserService.java
                     │   │   └── _GenericService.java
                     ├── application/
                     │   ├── dto/
+                    │   │   ├── PersonFilterDTO.java
+                    │   │   ├── PersonRequestDTO.java
+                    │   │   ├── PersonResponseDTO.java
+                    │   │   ├── UserFilterDTO.java
                     │   │   ├── UserRequestDTO.java
                     │   │   ├── UserResponseDTO.java
-                    │   │   └── UserFilterDTO.java
                     │   ├── mapper/
+                    │   │   ├── PersonMapper.java
                     │   │   ├── UserMapper.java
                     │   │   └── _GenericMapper.java
                     │   └── usecase/
+                    │       └── person/
+                    │           ├── CreatePersonUseCase.java
+                    │           ├── DeletePersonUseCase.java
+                    │           ├── FindPersonUseCase.java
+                    │           ├── GetPersonUseCase.java
+                    │           ├── UpdatePersonUseCase.java
                     │       └── user/
                     │           ├── CreateUserUseCase.java
                     │           ├── DeleteUserUseCase.java
+                    │           ├── FindUserUseCase.java
                     │           ├── GetUserUseCase.java
                     │           ├── UpdateUserUseCase.java
-                    │           └── FindUserUseCase.java
                     ├── domain/
                     │   ├── entity/
                     │   │   ├── GenericEntity.java
+                    │   │   ├── Person.java
+                    │   │   ├── Role.java
                     │   │   └── User.java
                     │   ├── repository/
+                    │   │   ├── PersonRepository.java
+                    │   │   ├── RoleRepository.java
                     │   │   └── UserRepository.java
                     │   └── specification/
                     │       ├── _GenericSpecification.java
+                    │       ├── FieldCache.java
+                    │       ├── PersonSpecification.java
                     │       └── UserSpecification.java
+                    ├── infrastructure/
+                    │   ├── config/
+                    │   │   ├── DataInitializer.java
+                    │   │   ├── jwtRequestFilterUtil.java
+                    │   │   ├── SecurityConfig.java
+                    │   │   ├── JwtUtil.java
+                    │   │   ├── CustomUserDetails.java
+                    │   │   ├── CustomUserDetailsService.java
+                    │   │   └── SwaggerConfig.java
                     ├── shared/
                     │   ├── exception/
                     │   │   ├── ApiException.java
                     │   │   ├── GlobalExceptionHandler.java
                     │   │   └── NotFoundException.java
                     │   ├── validation/
-                    │   │   ├── NameValidation.java
                     │   │   ├── EmailProviderValidation.java
-                    │   │   └── HumanDateValidation.java
+                    │   │   ├── HumanDateValidation.java
+                    │   │   └── NameValidation.java
                     │   └── utils/
                     │       └── ParseSortUtils.java
-                    └── infrastructure/
-                        └── config/
-                            ├── DatabaseConfig.java
-                            ├── SwaggerConfig.java
-                            └── TemplateApplication.java
+                    └── TemplateApplication.java
+
 ```
 
 ## Explanation of Clean Architecture and SOLID Principles

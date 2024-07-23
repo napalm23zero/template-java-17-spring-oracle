@@ -12,8 +12,8 @@ spring:
     properties:
       hibernate:
         jdbc:
-          time_zone: UTC
-        default_schema: ${HIBERNATE_DEFAULT_SCHEMA:template}
+          time-zone: UTC
+        default-schema: ${HIBERNATE_DEFAULT_SCHEMA:template}
   jackson:
     time-zone: UTC
 
@@ -27,3 +27,7 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+jwt:
+  secret: ${JWT_SECRET:1qa2ws3ed4rf5tg6yh7uj8ik9ol0p}
+  expiration: ${JWT_EXPIRATION:36000000} # 10 hours in milliseconds

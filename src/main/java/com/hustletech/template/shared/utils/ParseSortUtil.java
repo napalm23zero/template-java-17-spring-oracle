@@ -3,7 +3,7 @@ package com.hustletech.template.shared.utils;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
-public class ParseSortUtils {
+public class ParseSortUtil {
 
     public static Sort parseSortParameter(String sort) {
         if (!StringUtils.hasText(sort)) {
