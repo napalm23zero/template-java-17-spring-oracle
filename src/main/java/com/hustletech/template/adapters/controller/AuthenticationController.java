@@ -33,6 +33,7 @@ public class AuthenticationController {
      * @return a map containing the JWT token
      * @throws AuthenticationException if authentication fails
      */
+    @SuppressWarnings("unused")
     @PostMapping("/authenticate")
     public Map<String, String> createAuthenticationToken(@RequestBody AuthenticationRequestDTO authenticationRequest)
             throws AuthenticationException {
