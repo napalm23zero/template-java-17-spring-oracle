@@ -11,7 +11,7 @@ services:
     ports:
       - "8080:8080" # Exposing 8080 because we're open about our communication.
     volumes:
-      - ${HOME}/.m2:/root/.m2 # Mounting Maven's home to avoid downloading the internet every build.
+      - ${HOME}/.m2:/root/.m2 # Mapping to the user's .m2 directory. Docker's way of saying "make yourself at home".
     env_file:
       - .env # Environment secrets, shhh!
     depends_on:
@@ -21,11 +21,11 @@ services:
   # Oracle DB service, it keeps the data, because Java forgets everything on every new thread.
   template-oracle-db-build:
     build:
-      context: ..
-      dockerfile: .docker/Dockerfile.database # A different blueprint because diversity is key.
+      context: .. # Same context, different Dockerfile. Because diversity is key.
+      dockerfile: .docker/Dockerfile.database # A different blueprint because our DB deserves it.
     container_name: template-oracle-db-build # This container is the bedrock of our data empire.
     ports:
-      - "1521:1521" # You will find the data though this port.
+      - "1521:1521" # You will find the data through this port. If you know what you're doing.
     restart: always # Like a phoenix, it rises from the ashes automatically.
     environment: # Use environment variables, because hardcoding is for maniacs!
       ORACLE_PASSWORD: ${ORACLE_PASSWORD}
@@ -48,4 +48,4 @@ services:
 
 volumes:
   template-oracle-db-data:
-    driver: local # Local storage for now, because it just for fun.
+    driver: local # Local storage for now, because it's just for fun.

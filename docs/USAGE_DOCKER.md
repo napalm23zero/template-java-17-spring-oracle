@@ -1,4 +1,3 @@
-
 ## Running the Application with Docker Compose
 
 ### Prerequisites
@@ -37,11 +36,19 @@ SERVER_PORT=8080
 To run both the backend and the Oracle database using Docker Compose, follow these steps:
 
 1. Ensure you have the `.env` file configured as described above.
-2. Build and start the Docker containers:
+2. Use the provided script to set the environment variables correctly based on your OS and start Docker Compose:
 
-   ```bash
-   docker-compose --env-file .env -f .docker/docker-compose.yaml up --build
-   ```
+   - **On Unix (Linux/macOS):**
+   
+     ```bash
+     ./start-docker-compose.sh
+     ```
+
+   - **On Windows PowerShell:**
+
+     ```powershell
+     .\start-docker-compose.ps1
+     ```
 
 3. Access the application:
 
@@ -64,9 +71,17 @@ To run only the backend and connect to an external Oracle database, follow these
 
 2. Start the backend service using the external database configuration:
 
-   ```bash
-   docker-compose --env-file .env -f .docker/docker-compose.yaml up template-java-17-spring
-   ```
+   - **On Unix (Linux/macOS):**
+   
+     ```bash
+     ./start-docker-compose.sh
+     ```
+
+   - **On Windows PowerShell:**
+
+     ```powershell
+     .\start-docker-compose.ps1
+     ```
 
 3. Access the application:
 

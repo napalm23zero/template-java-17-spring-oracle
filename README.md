@@ -79,6 +79,7 @@ Hello, I'm **Rodrigo Dantas**, the tech nerd behind this project. With a passion
 
 I'm here to help, so don't hesitate to contact me via email or any of my social networks. Let's embark on this coding adventure together!
 
+
 # Table of Contents
 
 ## Theory
@@ -126,6 +127,7 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
   - [Step 3: Running the Application](docs/USAGE_DOCKER.md#step-3-running-the-application)
     - [Option 1: Run Backend + Oracle Database from Docker Compose](docs/USAGE_DOCKER.md#option-1-run-backend--oracle-database-from-docker-compose)
     - [Option 2: Run Backend with External Database](docs/USAGE_DOCKER.md#option-2-run-backend-with-external-database)
+    - [Using start-docker-compose.sh and start-docker-compose.ps1 Scripts](docs/USAGE_DOCKER.md#using-start-docker-compose-sh-and-start-docker-compose-ps1-scripts)
   - [Database Access](docs/USAGE_DOCKER.md#database-access)
 
 - [Running the Application in a DevContainer](docs/USAGE_DEVCONTAINER.md)
@@ -151,5 +153,6 @@ I'm here to help, so don't hesitate to contact me via email or any of my social 
     - [Deployment Workflow](docs/USAGE_DEPLOY.md#deployment-workflow)
     - [How It Works](docs/USAGE_DEPLOY.md#how-it-works)
     - [How to Check the Deployment Workflow](docs/USAGE_DEPLOY.md#how-to-check-the-deployment-workflow)
+
 
 Happy coding!

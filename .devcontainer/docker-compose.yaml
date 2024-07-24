@@ -13,11 +13,13 @@ services:
       - "6080:8080" # Remapped to 6080 because 8080 is just too obvious.
     volumes:
       - ../:/workspace # Your entire project, containerized!
-      - ${HOME}/.m2:/root/.m2 # Maven's cache because time is money and you know it.
+      - shared-maven-cache:/root/.m2 # Shared Maven cache because time is money and you know it.
     env_file:
       - .env # Shh, secrets!
     depends_on:
       - template-oracle-db-devcontainer # Depends on Oracle, because all great things have dependencies.
+    networks:
+      - templates
 
   # Oracle Database Development Container
   # This is where your data wears its floaties before jumping into the pool.
@@ -31,6 +33,7 @@ services:
       - "6521:1521" # Because sometimes, changing one digit is all the creativity you need.
     volumes:
       - template-oracle-db-data:/opt/oracle/oradata # Where your data sleeps at night.
+      - shared-maven-cache:/root/.m2 # Shared Maven cache for database dependencies.
     env_file:
       - .env # More secrets, shh!
     environment: # Use environment variables, because hardcoding is for maniacs!
@@ -38,10 +41,14 @@ services:
       ORACLE_DATABASE: ${ORACLE_DATABASE}
       APP_USER: ${ORACLE_USER}
       APP_USER_PASSWORD: ${ORACLE_PASSWORD}
+    networks:
+      - templates
 
 volumes:
   template-oracle-db-data:
     driver: local # Locally stored, because we like to keep our toys close.
+  shared-maven-cache:
+    driver: local # Shared Maven cache for all your dependency caching needs.
 
 networks:
   templates:
