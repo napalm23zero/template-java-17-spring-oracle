@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.hustletech.template.auth.adapter.service.AuthenticationService;
-import com.hustletech.template.auth.adapter.service.AuthenticationUserDetails;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -112,13 +112,12 @@ public class JwtRequestFilterUtil extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             log.info("Security context is null, validating token for user: {}", username);
-            AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails) this.authenticationService
-                    .loadUserByUsername(username);
+            UserDetails userDetails = this.authenticationService.loadUserByUsername(username);
 
-            if (Boolean.TRUE.equals(jwtUtil.validateToken(jwtToken, authenticationUserDetails.getUsername()))) {
+            if (Boolean.TRUE.equals(jwtUtil.validateToken(jwtToken, userDetails.getUsername()))) {
                 log.info("JWT Token is valid, setting security context for user: {}", username);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        authenticationUserDetails, null, authenticationUserDetails.getAuthorities());
+                        userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

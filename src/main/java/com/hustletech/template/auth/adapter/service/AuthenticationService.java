@@ -1,12 +1,8 @@
 package com.hustletech.template.auth.adapter.service;
 
-import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -63,27 +59,12 @@ public class AuthenticationService implements UserDetailsService {
         log.debug("Attempting to load user details for username: {}", username);
         return userRepository.findByUsername(username)
                 .map(user -> {
-                    log.debug("User found with username: {}", username); // Log if user is successfully found
-                    return new org.springframework.security.core.userdetails.User(
-                            user.getUsername(),
-                            user.getPassword(),
-                            mapRolesToAuthorities(user.getRoles()));
+                    log.debug("User found with username: {}", username);
+                    return new AuthenticationUserDetails(user);
                 })
                 .orElseThrow(() -> {
-                    log.error("Failed to find user with username: {}", username); // Log an error if user is not found
+                    log.error("Failed to find user with username: {}", username);
                     return new UsernameNotFoundException("User not found with username: " + username);
                 });
-    }
-
-    /**
-     * Maps roles to Spring Security GrantedAuthority.
-     *
-     * @param roles the roles to map
-     * @return a collection of GrantedAuthority
-     */
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
-                .collect(Collectors.toList());
     }
 }

@@ -16,4 +16,4 @@ fi
 export HOME
 
 # Run Docker Compose with our environment file and compose file. No excuses now.
-docker-compose --env-file .docker/.env -f .docker/docker-compose.yaml up template-java-17-spring-build
+docker-compose --env-file .env -f docker-compose.yaml up template-java-17-spring-build

@@ -1,16 +1,18 @@
-# Ultimate development environment
 # Grabbing the sleek openjdk:17-slim-bullseye because even devcontainers deserve the best.
 FROM openjdk:17-slim-bullseye
 
-# Rodrigo Dantas, the orchestrator of this little digital universe. Contact if you dare!
+# Who's the boss? WHO'S THE BOSS???
 LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
 # Installing a bunch of stuff because every ninja needs some tools.
 # Maven for building, Git for tracking, Python for scripting, and Curl for... well, curling up with your code.
-RUN apt-get update && apt-get install -y maven git python3 curl 
+RUN apt-get update && \
+    apt-get install -y maven git python3 curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Setting timezone to UTC in JVM options because developers never sleep... right?
+# Setting timezone to UTC in JVM options because hackers never sleep... right?
 ENV JAVA_OPTS="-Duser.timezone=UTC"
 
 # Setting our workspace in /workspace where the magic happens (and occasionally where dreams are broken).

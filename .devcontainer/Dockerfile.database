@@ -1,7 +1,7 @@
 # Using gvenzl/oracle-free:23-slim-faststart as the base because even in development, we like things sleek and fast.
 FROM gvenzl/oracle-free:23-slim-faststart
 
-# Rodrigo Dantas is the maintainer. Reach out if things get wonky, or just email me about how awesome this Dockerfile is.
+# If something breaks, blame the maintainer!!!!
 LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
@@ -14,8 +14,4 @@ ENV APP_USER_PASSWORD=${ORACLE_PASSWORD}
 # Exposing port 1521 because even databases have to shout sometimes (especially when they're mad).
 EXPOSE 1521
 
-# Mounting a volume here because data likes to stick around, even when you shut down your container.
-# Handle with care, or it might stick around in ways you didn't intend!
-VOLUME ["/opt/oracle/oradata"]
-
-# Note: This is a devcontainer, so treat it like a sandbox. Build castles, dig moats, or bury your colleague's keys.
+# Note: This devcontainer is your playground. Experiment wildly, code bravely, or just casually break things to see what happens.

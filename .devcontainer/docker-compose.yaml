@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   # Java 17 Spring Boot Development Container
-  # Where the Spring magic happens, now containerized for your coding pleasure.
   template-java-17-spring-devcontainer:
     build:
       context: .. # Yep, we're going up one directory; it's not a bug, it's a feature!
@@ -20,9 +19,13 @@ services:
       - template-oracle-db-devcontainer # Depends on Oracle, because all great things have dependencies.
     networks:
       - templates
+    logging:
+      driver: "json-file" # Because we need logs, and JSON is the chosen one.
+      options:
+        max-size: "10m" # Cap log size at 10 MB, because who reads beyond that?
+        max-file: "3" # Rotate after 3 logs, because history is overrated.
 
   # Oracle Database Development Container
-  # This is where your data wears its floaties before jumping into the pool.
   template-oracle-db-devcontainer:
     build:
       context: ..
@@ -32,16 +35,29 @@ services:
       - "6521:1521" # Because sometimes, changing one digit is all the creativity you need.
     volumes:
       - template-oracle-db-data:/opt/oracle/oradata # Where your data sleeps at night.
-      - shared-maven-cache:/root/.m2 # Shared Maven cache for database dependencies.
     env_file:
       - .env # More secrets, shh!
+    restart: always # Keeps coming back like a bad habit.
     environment: # Use environment variables, because hardcoding is for maniacs!
-      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
-      ORACLE_DATABASE: ${ORACLE_DATABASE}
-      APP_USER: ${ORACLE_USER}
-      APP_USER_PASSWORD: ${ORACLE_PASSWORD}
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD} # Oracle password, not to be confused with your Netflix password.
+      ORACLE_DATABASE: ${ORACLE_DATABASE} # Your glorious database name.
+      APP_USER: ${ORACLE_USER} # App user because 'admin' is too mainstream.
+      APP_USER_PASSWORD: ${ORACLE_PASSWORD} # App user password, equally secret.
     networks:
       - templates
+    healthcheck:
+      test: [
+          "CMD-SHELL",
+          "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:${ORACLE_PORT}/template_app",
+        ] # Checking the database health because zombies aren't allowed.
+      interval: 30s # Every 30 seconds, because patience is for the weak.
+      timeout: 10s # If it takes longer than 10 seconds, something's definitely wrong.
+      retries: 5 # Try 5 times before giving up, like most developers.
+    logging:
+      driver: "json-file" # Again, JSON logs because we need consistency in our lives.
+      options:
+        max-size: "10m" # 10 MB log cap, because less is more.
+        max-file: "3" # Rotate after 3 logs, to keep things fresh.
 
 volumes:
   template-oracle-db-data:
@@ -51,4 +67,4 @@ volumes:
 
 networks:
   templates:
-    driver: bridge # Bridging connections like a social butterfly.
+    driver: bridge # Bridging connections like social networks.
