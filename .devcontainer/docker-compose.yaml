@@ -28,7 +28,6 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile.database
     container_name: template-oracle-db-devcontainer # The bedrock of your data kingdom.
-    restart: always # Keeps coming back like a bad habit.
     ports:
       - "6521:1521" # Because sometimes, changing one digit is all the creativity you need.
     volumes:

@@ -10,8 +10,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.hustletech.template.adapters.security.CustomUserDetails;
-import com.hustletech.template.adapters.security.CustomUserDetailsService;
+import com.hustletech.template.auth.adapter.service.AuthenticationService;
+import com.hustletech.template.auth.adapter.service.AuthenticationUserDetails;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -21,12 +21,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JWT request filter that checks for valid JWT in the authorization header of
+ * each HTTP request.
+ * It is executed once per request and is responsible for setting the security
+ * context based on JWT validation.
+ */
 @Component
 @Slf4j
 public class JwtRequestFilterUtil extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
-    private final CustomUserDetailsService userDetailsService;
+    private JwtUtil jwtUtil;
+    private AuthenticationService authenticationService;
 
     private static final List<String> EXCLUDED_PATHS = Arrays.asList(
             "/api/authenticate",
@@ -34,19 +40,39 @@ public class JwtRequestFilterUtil extends OncePerRequestFilter {
             "/swagger-ui",
             "/swagger-ui.html");
 
-    public JwtRequestFilterUtil(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
+    /**
+     * Default constructor for component initialization.
+     */
+    public JwtRequestFilterUtil() {
     }
 
     /**
-     * Filters each request to validate JWT token and set security context.
-     *
-     * @param request  the HTTP request
-     * @param response the HTTP response
+     * Sets the JWT utility class used for extracting and validating JWTs.
+     * 
+     * @param jwtUtil the JwtUtil instance
+     */
+    public void setJwtUtil(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    /**
+     * Sets the authentication service used for user detail loading.
+     * 
+     * @param authenticationService the AuthenticationService instance
+     */
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    /**
+     * Internal filter method to process the incoming request and validate JWTs.
+     * Excludes specific paths from JWT requirement.
+     * 
+     * @param request  the incoming HTTP request
+     * @param response the outgoing HTTP response
      * @param chain    the filter chain
-     * @throws ServletException if an error occurs during filtering
-     * @throws IOException      if an IO error occurs during filtering
+     * @throws ServletException, IOException if an error occurs processing the
+     *                           filter chain
      */
     @SuppressWarnings("null")
     @Override
@@ -86,12 +112,13 @@ public class JwtRequestFilterUtil extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             log.info("Security context is null, validating token for user: {}", username);
-            CustomUserDetails userDetails = (CustomUserDetails) this.userDetailsService.loadUserByUsername(username);
+            AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails) this.authenticationService
+                    .loadUserByUsername(username);
 
-            if (Boolean.TRUE.equals(jwtUtil.validateToken(jwtToken, userDetails.getUsername()))) {
+            if (Boolean.TRUE.equals(jwtUtil.validateToken(jwtToken, authenticationUserDetails.getUsername()))) {
                 log.info("JWT Token is valid, setting security context for user: {}", username);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+                        authenticationUserDetails, null, authenticationUserDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

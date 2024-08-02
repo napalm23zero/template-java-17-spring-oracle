@@ -2,6 +2,7 @@ package com.hustletech.template.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.hustletech.template.adapters.security.CustomUserDetailsService;
+import com.hustletech.template.auth.adapter.service.AuthenticationService;
 import com.hustletech.template.shared.utils.JwtRequestFilterUtil;
 import com.hustletech.template.shared.utils.JwtUtil;
 
@@ -22,29 +23,25 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+    private final @Lazy AuthenticationService authenticationService;
+    private final CustomAuthorizationManager customAuthorizationManager;
 
-    /**
-     * Configures the security filter chain for HTTP security.
-     *
-     * @param http the HttpSecurity to configure
-     * @return the configured SecurityFilterChain
-     * @throws Exception in case of any configuration error
-     */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        JwtRequestFilterUtil jwtRequestFilter = new JwtRequestFilterUtil(jwtUtil, userDetailsService);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtRequestFilterUtil jwtRequestFilter)
+            throws Exception {
+        jwtRequestFilter.setJwtUtil(jwtUtil);
+        jwtRequestFilter.setAuthenticationService(authenticationService);
 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/authenticate/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().access(customAuthorizationManager))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -52,24 +49,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Provides the authentication manager bean.
-     *
-     * @param authenticationConfiguration the authentication configuration
-     * @return the configured AuthenticationManager
-     * @throws Exception in case of any configuration error
-     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /**
-     * Provides the password encoder bean.
-     *
-     * @return the configured PasswordEncoder
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

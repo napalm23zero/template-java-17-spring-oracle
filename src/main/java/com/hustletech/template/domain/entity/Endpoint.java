@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "roles")
-public class Role extends GenericEntity {
+@Table(name = "endpoints")
+public class Endpoint extends GenericEntity {
 
-    private String name;
+    private String url;
 
-    public Role(String name) {
-        this.name = name;
+    public Endpoint(String url) {
+        this.url = url;
     }
 }

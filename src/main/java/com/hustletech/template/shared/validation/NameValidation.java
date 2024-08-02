@@ -5,15 +5,21 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+
+import com.hustletech.template.shared.exception.BadRequestException;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 
+/**
+ * Custom annotation to validate that a given string value is a properly
+ * formatted name,
+ * which must include at least a first name and a surname.
+ */
 @Documented
 @Constraint(validatedBy = NameValidation.Validator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
@@ -25,23 +31,48 @@ public @interface NameValidation {
 
     Class<? extends Payload>[] payload() default {};
 
+    /**
+     * Validator to enforce that the given name includes both a first name and a
+     * surname.
+     */
     class Validator implements ConstraintValidator<NameValidation, String> {
         @Override
         public boolean isValid(String name, ConstraintValidatorContext context) {
-            List<Predicate<String>> validations = Arrays.asList(
-                    Validator::isNotEmpty,
-                    Validator::containsFirstNameAndSurname);
+            List<String> errors = new ArrayList<>();
 
-            return validations.stream().allMatch(validation -> validation.test(name));
+            if (!isNotEmpty(name)) {
+                errors.add("Name cannot be empty.");
+            }
+
+            if (name != null && !containsFirstNameAndSurname(name)) {
+                errors.add("Name must include both a first name and a surname.");
+            }
+
+            if (!errors.isEmpty()) {
+                throw new BadRequestException(errors); // Throw the custom exception with validation errors
+            }
+
+            return true;
         }
 
-        // Validates if the name is not empty or null.
-        public static boolean isNotEmpty(String name) {
+        /**
+         * Validates if the name is not empty or null.
+         *
+         * @param name the name to check
+         * @return true if the name is not empty, false otherwise
+         */
+        private boolean isNotEmpty(String name) {
             return name != null && !name.trim().isEmpty();
         }
 
-        // Validates if the name contains at least a first name and a surname.
-        public static boolean containsFirstNameAndSurname(String name) {
+        /**
+         * Validates if the name contains at least a first name and a surname.
+         *
+         * @param name the name to check
+         * @return true if the name contains both a first name and a surname, false
+         *         otherwise
+         */
+        private boolean containsFirstNameAndSurname(String name) {
             String[] parts = name.trim().split("\\s+");
             return parts.length >= 2;
         }

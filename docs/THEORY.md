@@ -5,87 +5,119 @@ This project follows the principles of Clean Architecture, ensuring a clear sepa
 ### Project Structure
 
 ```
-src/
-└── main/
-    └── java/
-        └── com/
-            └── hustletech/
-                └── template/
-                    ├── adapters/
-                    │   ├── controller/
-                    │   │   ├── AuthenticationController.java
-                    │   │   ├── PersonController.java
-                    │   │   ├── _GenericController.java
-                    │   │   └── exception/
-                    │   │       ├── GlobalExceptionHandler.java
-                    │   │       ├── ApiException.java
-                    │   │       └── NotFoundException.java
-                    │   ├── security/
-                    │   │   ├── CustomUserDetails.java
-                    │   │   ├── CustomUserDetailsService.java
-                    │   ├── service/
-                    │   │   ├── PersonService.java
-                    │   │   ├── UserService.java
-                    │   │   └── _GenericService.java
-                    ├── application/
-                    │   ├── dto/
-                    │   │   ├── PersonFilterDTO.java
-                    │   │   ├── PersonRequestDTO.java
-                    │   │   ├── PersonResponseDTO.java
-                    │   │   ├── UserFilterDTO.java
-                    │   │   ├── UserRequestDTO.java
-                    │   │   ├── UserResponseDTO.java
-                    │   ├── mapper/
-                    │   │   ├── PersonMapper.java
-                    │   │   ├── UserMapper.java
-                    │   │   └── _GenericMapper.java
-                    │   └── usecase/
-                    │       └── person/
-                    │           ├── CreatePersonUseCase.java
-                    │           ├── DeletePersonUseCase.java
-                    │           ├── FindPersonUseCase.java
-                    │           ├── GetPersonUseCase.java
-                    │           ├── UpdatePersonUseCase.java
-                    │       └── user/
-                    │           ├── CreateUserUseCase.java
-                    │           ├── DeleteUserUseCase.java
-                    │           ├── FindUserUseCase.java
-                    │           ├── GetUserUseCase.java
-                    │           ├── UpdateUserUseCase.java
-                    ├── domain/
-                    │   ├── entity/
-                    │   │   ├── GenericEntity.java
-                    │   │   ├── Person.java
-                    │   │   ├── Role.java
-                    │   │   └── User.java
-                    │   ├── repository/
-                    │   │   ├── PersonRepository.java
-                    │   │   ├── RoleRepository.java
-                    │   │   └── UserRepository.java
-                    │   └── specification/
-                    │       ├── _GenericSpecification.java
-                    │       ├── FieldCache.java
-                    │       ├── PersonSpecification.java
-                    │       └── UserSpecification.java
-                    ├── infrastructure/
-                    │   ├── config/
-                    │   │   ├── DataInitializer.java
-                    │   │   ├── JwtRequestFilterUtil.java
-                    │   │   ├── SecurityConfig.java
-                    │   │   ├── JwtUtil.java
-                    │   │   └── SwaggerConfig.java
-                    ├── shared/
-                    │   ├── exception/
-                    │   │   ├── ApiException.java
-                    │   │   ├── GlobalExceptionHandler.java
-                    │   │   └── NotFoundException.java
-                    │   ├── validation/
-                    │   │   ├── EmailProviderValidation.java
-                    │   │   ├── HumanDateValidation.java
-                    │   │   └── NameValidation.java
-                    │   └── utils/
-                    │       └── ParseSortUtils.java
-                    └── TemplateApplication.java
+.
+├── HELP.md
+├── README.md
+├── docs
+│   ├── THEORY.md
+│   ├── USAGE_DEPLOY.md
+│   ├── USAGE_DEVCONTAINER.md
+│   ├── USAGE_DOCKER.md
+│   └── diagram.drawio
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── src
+    └── main
+        ├── java
+        │   └── com
+        │       └── hustletech
+        │           └── template
+        │               ├── TemplateApplication.java
+        │               ├── auth
+        │               │   ├── adapter
+        │               │   │   ├── controller
+        │               │   │   │   ├── AuthenticationController.java
+        │               │   │   │   └── RoleController.java
+        │               │   │   └── service
+        │               │   │       ├── AuthenticationService.java
+        │               │   │       ├── AuthenticationUserDetails.java
+        │               │   │       └── RoleService.java
+        │               │   └── application
+        │               │       └── dto
+        │               │           └── AuthenticationRequestDTO.java
+        │               ├── domain
+        │               │   ├── entity
+        │               │   │   ├── Endpoint.java
+        │               │   │   ├── GenericEntity.java
+        │               │   │   ├── Person.java
+        │               │   │   ├── Role.java
+        │               │   │   ├── RoleEndpoint.java
+        │               │   │   └── User.java
+        │               │   ├── repository
+        │               │   │   ├── EndpointRepository.java
+        │               │   │   ├── PersonRepository.java
+        │               │   │   ├── RoleEndpointRepository.java
+        │               │   │   ├── RoleRepository.java
+        │               │   │   └── UserRepository.java
+        │               │   ├── service
+        │               │   │   └── RoleEndpointService.java
+        │               │   └── specification
+        │               │       └── _GenericSpecification.java
+        │               ├── infrastructure
+        │               │   └── config
+        │               │       ├── CustomAuthorizationManager.java
+        │               │       ├── DataInitializer.java
+        │               │       ├── SecurityConfig.java
+        │               │       └── SwaggerConfig.java
+        │               ├── person
+        │               │   ├── adapter
+        │               │   │   ├── controller
+        │               │   │   │   └── PersonController.java
+        │               │   │   └── service
+        │               │   │       └── PersonService.java
+        │               │   └── application
+        │               │       ├── dto
+        │               │       │   ├── PersonFilterDTO.java
+        │               │       │   ├── PersonRequestDTO.java
+        │               │       │   └── PersonResponseDTO.java
+        │               │       └── mapper
+        │               │           └── PersonMapper.java
+        │               ├── shared
+        │               │   ├── adapters
+        │               │   │   ├── controller
+        │               │   │   │   └── _GenericController.java
+        │               │   │   └── service
+        │               │   │       └── _GenericService.java
+        │               │   ├── application
+        │               │   │   └── mapper
+        │               │   │       └── _GenericMapper.java
+        │               │   ├── exception
+        │               │   │   ├── ApiException.java
+        │               │   │   ├── BadRequestException.java
+        │               │   │   ├── GlobalExceptionHandler.java
+        │               │   │   ├── InvalidCredentialsException.java
+        │               │   │   ├── InvalidTokenException.java
+        │               │   │   ├── NotAuthorizedException.java
+        │               │   │   └── NotFoundException.java
+        │               │   ├── utils
+        │               │   │   ├── JwtRequestFilterUtil.java
+        │               │   │   ├── JwtUtil.java
+        │               │   │   └── ParseSortUtil.java
+        │               │   └── validation
+        │               │       ├── EmailProviderValidation.java
+        │               │       ├── HumanDateValidation.java
+        │               │       ├── NameValidation.java
+        │               │       ├── PasswordValidation.java
+        │               │       └── UserNameValidation.java
+        │               └── user
+        │                   ├── adapter
+        │                   │   ├── controller
+        │                   │   │   └── UserController.java
+        │                   │   └── service
+        │                   │       └── UserService.java
+        │                   └── application
+        │                       ├── dto
+        │                       │   ├── UserFilterDTO.java
+        │                       │   ├── UserRequestDTO.java
+        │                       │   └── UserResponseDTO.java
+        │                       └── mapper
+        │                           └── UserMapper.java
+        └── resources
+            ├── META-INF
+            │   └── additional-spring-configuration-metadata.json
+            ├── application-test.yml
+            └── application.yaml
 ```
 
 ## Explanation of Clean Architecture and SOLID Principles
@@ -94,7 +126,7 @@ src/
 
 - **Controller:** The `AuthenticationController` and `PersonController` classes handle HTTP requests and map them to the appropriate use cases. They serve as interface adapters that translate user actions into application actions.
 - **Exception:** The `GlobalExceptionHandler`, `ApiException`, and `NotFoundException` classes handle specific exceptions related to various operations.
-- **Security:** The `CustomUserDetails` and `CustomUserDetailsService` classes handle user details and authentication mechanisms.
+- **Security:** The `CustomUserDetails` and `UserService` classes handle user details and authentication mechanisms.
 
 ### Application Layer
 
