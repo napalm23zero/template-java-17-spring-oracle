@@ -31,6 +31,7 @@ services:
       timeout: 10s # Timeout after 10 seconds, because time is precious.
       retries: 3 # Retry 3 times, because who gives up after the first try?
 
+  # The database, because Java alone is boring.
   template-oracle-db-build:
     build:
       context: .. # Reaching out of the directory, because boundaries are for the weak.

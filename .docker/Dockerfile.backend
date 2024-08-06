@@ -1,28 +1,33 @@
 # Stage 1: Build the application
 FROM openjdk:17-slim-bullseye AS builder
 
-# Who's the boss?? WHO'S THE BOSS?????
-LABEL maintainer="Rodrigo Dantas" 
+# yup, you guessed it, I'm the boss.
+LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
 # Install Maven, because building is half the fun.
 RUN apt-get update && apt-get install -y maven
 
-WORKDIR /app # Set working directory, because chaos is not an option.
+# Set working directory, because chaos is not an option.
+WORKDIR /app 
 
 # Copy project files and install dependencies, because we're thorough.
-COPY pom.xml .
+COPY pom.xml /app/
+
 RUN mvn dependency:go-offline -B
 
 # Copy source code and build application, because what else?
-COPY src ./src
+COPY src /app/src
+
+# Build the application
 RUN mvn clean package
 
 # Stage 2: Run the application
 # Slim base image, because diet is important.
 FROM openjdk:17-slim-bullseye 
 
-WORKDIR /app # Working directory, because order is key.
+# Working directory, because order is key.
+WORKDIR /app 
 
 # Copy built jar from builder stage, because we don't build twice.
 COPY --from=builder /app/target/*.jar /app/app.jar

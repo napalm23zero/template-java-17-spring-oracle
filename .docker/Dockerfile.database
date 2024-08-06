@@ -1,8 +1,8 @@
 # Oracle base image, because free is good.
-FROM gvenzl/oracle-free:23-slim-faststart 
+FROM gvenzl/oracle-free:23-slim-faststart
 
 # You need to blame someone if things go wrong. So blame me.
-LABEL maintainer="Rodrigo Dantas" 
+LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
 # Environment variables for Oracle Database, because configuration is key.
