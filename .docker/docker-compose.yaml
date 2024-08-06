@@ -1,72 +1,71 @@
 version: "3.8"
 
 services:
-  # The Java build service that acts like it owns the place.
+  # The java application that will be built and run.
   template-java-17-spring-build:
     build:
-      context: .. # Yes, we are reaching out of the current directory!
-      dockerfile: .docker/Dockerfile.backend # The blueprint for your backend's life.
-    container_name: template-java-17-spring-build # Naming it so it doesn't get lost in the container crowd.
-    image: napalm23zero/template-java-17-spring-build # Custom image name, because default names are for the uninitiated.
+      context: .. # Because the local directory is 2007
+      dockerfile: .docker/Dockerfile.backend # Backend Dockerfile, because we're organized.
+    container_name: template-java-17-spring-build # To avoid getting lost in the sea of containers.
+    image: napalm23zero/template-java-17-spring-build # Custom image, we are custom baby!
     ports:
-      - "8080:8080" # Exposing 8080 because we're open about our communication.
+      - "8080:8080" # Because communication should be transparent.
     volumes:
-      - ../:/workspace # Your entire project, containerized!
-      - shared-maven-cache:/root/.m2 # Shared Maven cache because time is money, and you know it.
+      - ../:/workspace # Entire project, encapsulated!
+      - shared-maven-cache:/root/.m2 # Maven cache, because waiting is for amateurs.
     env_file:
-      - .env # Environment secrets, shhh!
+      - .env # shhh, secrets!
     depends_on:
       template-oracle-db-build:
-        condition: service_healthy # Dependency says: "No healthy DB, no app startup!"
+        condition: service_healthy # No healthy DB, no startup. Simple as that.
     networks:
-      - templates # Using a custom bridge network.
+      - templates # Custom network, because we can.
     logging:
-      driver: "json-file" # Because we need logs, and JSON is the chosen one.
+      driver: "json-file" # JSON logs, because we need to read them later.
       options:
-        max-size: "10m" # Cap log size at 10 MB, because who reads beyond that?
-        max-file: "3" # Rotate after 3 logs, because history is overrated.
+        max-size: "10m" # Log size capped at 10MB, because less is more.
+        max-file: "3" # Rotate after 3 logs, to keep things fresh.
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080 || exit 1"]
-      interval: 30s # Check health every 30 seconds.
-      timeout: 10s # Timeout after 10 seconds.
-      retries: 3 # Retry 3 times before marking as unhealthy.
+      interval: 30s # Check health every 30 seconds, because we're paranoid.
+      timeout: 10s # Timeout after 10 seconds, because time is precious.
+      retries: 3 # Retry 3 times, because who gives up after the first try?
 
-  # Oracle DB service, it keeps the data, because Java forgets everything on every new thread.
   template-oracle-db-build:
     build:
-      context: .. # Same context, different Dockerfile, because diversity is key.
-      dockerfile: .docker/Dockerfile.database # A different blueprint because our DB deserves it.
-    container_name: template-oracle-db-build # This container is the bedrock of our data empire.
+      context: .. # Reaching out of the directory, because boundaries are for the weak.
+      dockerfile: .docker/Dockerfile.database # Different Dockerfile for our DB, because we are organized AF!!!
+    container_name: template-oracle-db-build # This container is the cornerstone of our data empire.
     ports:
-      - "1521:1521" # You will find the data through this port, if you know what you're doing.
+      - "1521:1521" # Data port, if you know what you're doing.
     restart: always # Like a phoenix, it rises from the ashes automatically.
-    environment: # Use environment variables, because hardcoding is for maniacs!
-      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+    environment: # Environment variables, because we're not maniacs.
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD} 
       ORACLE_DATABASE: ${ORACLE_DATABASE}
       APP_USER: ${ORACLE_USER}
       APP_USER_PASSWORD: ${ORACLE_PASSWORD}
     volumes:
-      - template-oracle-db-data:/opt/oracle/oradata # Persisting data because amnesia is bad for databases.
+      - template-oracle-db-data:/opt/oracle/oradata # Persistent data, because amnesia is bad.
     env_file:
       - .env # More secrets, shhh!
     healthcheck:
       test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:1521/${ORACLE_DATABASE}"]
-      interval: 30s # Check health every 30 seconds.
-      timeout: 10s # Timeout after 10 seconds.
-      retries: 5 # Retry 5 times before marking as unhealthy.
+      interval: 30s # Health check every 30 seconds, because why not?
+      timeout: 10s # Timeout after 10 seconds, time waits for no one.
+      retries: 5 # Retry 5 times, because persistence pays off.
     networks:
-      - templates # Using a custom bridge network.
+      - templates # Custom network, because we're fancy.
     logging:
-      driver: "json-file" # Again, JSON logs because we need consistency in our lives.
+      driver: "json-file" # JSON logs, because consistency is key.
       options:
-        max-size: "10m" # 10 MB log cap, because less is more.
-        max-file: "3" # Rotate after 3 logs, to keep things fresh.
+        max-size: "10m" # Log size capped at 10MB, because who reads more?
+        max-file: "3" # Rotate after 3 logs, to keep things tidy.
 
 volumes:
   template-oracle-db-data:
-    driver: local # Locally stored, because we like to keep our toys close.
+    driver: local # Local storage, keeping it close.
   shared-maven-cache:
-    driver: local # Shared Maven cache for all your dependency caching needs.
+    driver: local # Shared Maven cache, because dependencies are a pain.
 
 networks:
   templates:

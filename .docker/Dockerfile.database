@@ -1,15 +1,18 @@
-FROM gvenzl/oracle-free:23-slim-faststart
+# Oracle base image, because free is good.
+FROM gvenzl/oracle-free:23-slim-faststart 
 
-LABEL maintainer="Rodrigo Dantas"
+# You need to blame someone if things go wrong. So blame me.
+LABEL maintainer="Rodrigo Dantas" 
 LABEL email="rodrigo.dantas@hustletech.dev"
 
-# Environment variables for Oracle Database
+# Environment variables for Oracle Database, because configuration is key.
 ENV ORACLE_PASSWORD=${ORACLE_PASSWORD}
 ENV ORACLE_DATABASE=${ORACLE_DATABASE}
 ENV APP_USER=${ORACLE_USER}
 ENV APP_USER_PASSWORD=${ORACLE_PASSWORD}
 
+ # Expose port 1521, because we need access.
 EXPOSE 1521
 
-# Volume for Oracle data persistence
+# Volume for Oracle data persistence, because data loss is not an option.
 VOLUME ["/opt/oracle/oradata"]
