@@ -1,37 +1,35 @@
 version: "3.9"
 
 services:
-  # Java 17 Spring Boot Development Container
   template-java-17-spring-devcontainer:
     build:
-      context: .. # Yep, we're going up one directory; it's not a bug, it's a feature!
-      dockerfile: .devcontainer/Dockerfile.backend
-    container_name: template-java-17-spring-devcontainer # A name as long as the build time on a slow day.
-    image: napalm23zero/template-java-17-spring-devcontainer # Custom image, because default is too mainstream.
+      context: .. # Yep, going up one directory; it's not a bug, it's a feature!
+      dockerfile: .devcontainer/Dockerfile.backend # Backend Dockerfile, because the backend is where the magic happens.
+    container_name: template-java-17-spring-devcontainer # A name longer than the build time on a slow day.
+    image: napalm23zero/template-java-17-spring-devcontainer # Custom image, because default is for the uninspired.
     ports:
-      - "6080:8080" # Remapped to 6080 because 8080 is just too obvious.
+      - "6080:8080" # Remapped to 6080 because 8080 is too mainstream.
     volumes:
-      - ../:/workspace # Your entire project, containerized!
-      - shared-maven-cache:/root/.m2 # Shared Maven cache because time is money and you know it.
+      - ../:/workspace # Your entire project, devcontainerized!
+      - shared-maven-cache:/root/.m2 # Shared Maven cache because waiting for dependencies is for amateurs.
     env_file:
       - .env # Shh, secrets!
     depends_on:
       template-oracle-db-devcontainer: 
-        condition: service_healthy  # Depends on Oracle, because all great things have dependencies.
+        condition: service_healthy # Depends on Oracle, because all great things have dependencies.
     networks:
-      - templates
+      - templates # Custom network, because default is boring.
     logging:
       driver: "json-file" # Because we need logs, and JSON is the chosen one.
       options:
         max-size: "10m" # Cap log size at 10 MB, because who reads beyond that?
         max-file: "3" # Rotate after 3 logs, because history is overrated.
-    command: ["sh", "-c", "trap 'docker-compose stop' EXIT; while :; do sleep 1; done"] # Ensures all services stop when this container stops
+    command: ["sh", "-c", "trap 'docker-compose stop' EXIT; while :; do sleep 1; done"] # Ensures all services stop when this container stops.
 
-  # Oracle Database Development Container
   template-oracle-db-devcontainer:
     build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile.database
+      context: .. # Reaching out of the directory, because boundaries are for the weak.
+      dockerfile: .devcontainer/Dockerfile.database # Database Dockerfile, because our DB deserves its own space.
     container_name: template-oracle-db-devcontainer # The bedrock of your data kingdom.
     ports:
       - "6521:1521" # Because sometimes, changing one digit is all the creativity you need.
@@ -40,26 +38,23 @@ services:
     env_file:
       - .env # More secrets, shh!
     restart: always # Keeps coming back like a bad habit.
-    environment: # Use environment variables, because hardcoding is for maniacs!
+    environment:
       ORACLE_PASSWORD: ${ORACLE_PASSWORD} # Oracle password, not to be confused with your Netflix password.
       ORACLE_DATABASE: ${ORACLE_DATABASE} # Your glorious database name.
       APP_USER: ${ORACLE_USER} # App user because 'admin' is too mainstream.
       APP_USER_PASSWORD: ${ORACLE_PASSWORD} # App user password, equally secret.
     networks:
-      - templates
+      - templates # Custom network, because we're fancy.
     healthcheck:
-      test: [
-          "CMD-SHELL",
-          "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:1521/${ORACLE_DATABASE}",
-        ] # Checking the database health because zombies aren't allowed.
+      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:1521/${ORACLE_DATABASE}"]
       interval: 30s # Every 30 seconds, because patience is for the weak.
       timeout: 10s # If it takes longer than 10 seconds, something's definitely wrong.
       retries: 5 # Try 5 times before giving up, like most developers.
     logging:
-      driver: "json-file" # Again, JSON logs because we need consistency in our lives.
+      driver: "json-file" # Again, JSON logs because consistency is key.
       options:
         max-size: "10m" # 10 MB log cap, because less is more.
-        max-file: "3" # Rotate after 3 logs, to keep things fresh.
+        max-file: "3" # Rotate after 3 logs, to keep things tidy.
 
 volumes:
   template-oracle-db-data:
