@@ -16,7 +16,8 @@ services:
     env_file:
       - .env # Shh, secrets!
     depends_on:
-      - template-oracle-db-devcontainer # Depends on Oracle, because all great things have dependencies.
+      template-oracle-db-devcontainer: 
+        condition: service_healthy  # Depends on Oracle, because all great things have dependencies.
     networks:
       - templates
     logging:
@@ -24,6 +25,7 @@ services:
       options:
         max-size: "10m" # Cap log size at 10 MB, because who reads beyond that?
         max-file: "3" # Rotate after 3 logs, because history is overrated.
+    command: ["sh", "-c", "trap 'docker-compose stop' EXIT; while :; do sleep 1; done"] # Ensures all services stop when this container stops
 
   # Oracle Database Development Container
   template-oracle-db-devcontainer:
@@ -48,7 +50,7 @@ services:
     healthcheck:
       test: [
           "CMD-SHELL",
-          "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:${ORACLE_PORT}/template_app",
+          "echo 'SELECT 1 FROM DUAL;' | sqlplus -s SYSTEM/${ORACLE_PASSWORD}@localhost:1521/${ORACLE_DATABASE}",
         ] # Checking the database health because zombies aren't allowed.
       interval: 30s # Every 30 seconds, because patience is for the weak.
       timeout: 10s # If it takes longer than 10 seconds, something's definitely wrong.

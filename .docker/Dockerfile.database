@@ -1,20 +1,15 @@
-# Using gvenzl/oracle-free:23-slim-faststart as the base image because we don't have all day to build from scratch.
 FROM gvenzl/oracle-free:23-slim-faststart
 
-# Who's the boss??
 LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
-# Setting environment variables here, because hardcoding credentials in your apps is what maniacs do.
-# Remember to replace these with your secret environment variables, or I will laugh when your database gets hacked.
+# Environment variables for Oracle Database
 ENV ORACLE_PASSWORD=${ORACLE_PASSWORD}
 ENV ORACLE_DATABASE=${ORACLE_DATABASE}
 ENV APP_USER=${ORACLE_USER}
 ENV APP_USER_PASSWORD=${ORACLE_PASSWORD}
 
-# Exposing port 1521, because Oracle needs to communicate, even if you prefer it didn't.
 EXPOSE 1521
 
-# Here we setup a volume for Oracle data.
-# Why? Because losing your database data is only funny if it happens to someone else.
+# Volume for Oracle data persistence
 VOLUME ["/opt/oracle/oradata"]

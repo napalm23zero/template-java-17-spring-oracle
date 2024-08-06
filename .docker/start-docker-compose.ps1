@@ -1,20 +1,19 @@
-# This script will make Docker Compose behave by setting the HOME variable. 
-# Because Docker can't figure out your OS and username by itself. Yet.
+# This script sets the HOME variable and runs Docker Compose.
 
-# Detect the OS because we can't trust Docker to do it.
+# Ensure the PowerShell version is supported.
 if ($PSVersionTable.PSVersion.Major -ge 6 -or $PSVersionTable.PSEdition -eq 'Desktop') {
     $os = [System.Environment]::OSVersion.Platform
     if ($os -eq 'Win32NT') {
-        # Windows, so you're normal. Welcome to the club.
+        # Set HOME variable for Windows.
         $env:HOME = "$env:USERPROFILE"
     } else {
-        Write-Host "Unsupported OS. What are you, a time traveler?"
+        Write-Host "Unsupported OS detected. Exiting."
         exit 1
     }
 } else {
-    Write-Host "Unsupported PowerShell version. Upgrade to PowerShell Core or newer."
+    Write-Host "Unsupported PowerShell version. Please upgrade to PowerShell Core or newer."
     exit 1
 }
 
-# Run Docker Compose with our environment file and compose file. Time to rock and roll.
-docker-compose --env-file .env -f docker-compose.yaml up template-java-17-spring-build
+# Run Docker Compose with the specified environment file and compose file.
+docker-compose --env-file .env -f docker-compose.yaml up --build

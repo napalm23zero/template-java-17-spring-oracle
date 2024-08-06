@@ -1,37 +1,31 @@
 # Stage 1: Build the application
-# We're using openjdk:17-slim-bullseye because we respect ourselves.
 FROM openjdk:17-slim-bullseye AS builder
 
-# Maintainer label, because you'll want to know whom to complain to when things go south.
 LABEL maintainer="Rodrigo Dantas"
 LABEL email="rodrigo.dantas@hustletech.dev"
 
-# Every ninja need some tools
+# Install Maven
 RUN apt-get update && apt-get install -y maven
 
-# Where the magic happens.
 WORKDIR /app
 
-# Copying the pom.xml first to cache dependencies. It's not just a good idea, it's faster.
+# Copy project files and install dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copying the source code to inside of the container.
+# Copy source code and build application
 COPY src ./src
 RUN mvn clean package
 
 # Stage 2: Run the application
-# Using the same slim Java image because consistency is key (and because we don't like bloated images).
 FROM openjdk:17-slim-bullseye
 
-# Again, setting the work directory because Docker doesn't have telepathy yet.
 WORKDIR /app
 
-# Copying the built jar from the builder stage.
+# Copy built jar from builder stage
 COPY --from=builder /app/target/*.jar /app/app.jar
 
-# Exposing port 8080
 EXPOSE 8080
 
-# The entry point. It's like telling Java "You shall not pass!" without the "-jar" option.
+# Run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -31,7 +31,7 @@ public @interface UserNameValidation {
      * specified formatting rules.
      */
     class Validator implements ConstraintValidator<UserNameValidation, String> {
-        private static final String USERNAME_PATTERN = "^[a-zA-Z0-9_-]{3,16}$";
+        private static final String USERNAME_PATTERN = "^(?!\\.)(?!.*\\.$)[a-zA-Z0-9_.-]{3,16}$";
 
         @Override
         public boolean isValid(String username, ConstraintValidatorContext context) {
@@ -61,11 +61,14 @@ public @interface UserNameValidation {
          */
         private List<String> analyzeUsername(String username) {
             List<String> issues = new ArrayList<>();
-            if (!username.matches("^[a-zA-Z0-9_-]+$")) {
-                issues.add("Username must contain only letters, numbers, underscores, or dashes.");
+            if (!username.matches("^[a-zA-Z0-9_.-]+$")) {
+                issues.add("Username must contain only letters, numbers, underscores, dashes, or dots.");
             }
             if (username.length() < 3 || username.length() > 16) {
                 issues.add("Username must be between 3 and 16 characters long.");
+            }
+            if (username.startsWith(".") || username.endsWith(".")) {
+                issues.add("Username cannot start or end with a dot.");
             }
             return issues;
         }
