@@ -100,7 +100,7 @@ public abstract class _GenericService<Entity, RequestDTO, ResponseDTO, ID, Filte
         Page<ResponseDTO> resultPage = specificationExecutor.findAll(spec, pageable).map(mapper::entityToResponseDto);
 
         if (resultPage.isEmpty()) {
-            throw new NotFoundException(entityName, "No entities found with the specified criteria.");
+            throw new NotFoundException(String.format("No %s found with the specified criteria.", entityName));
         }
 
         return resultPage;

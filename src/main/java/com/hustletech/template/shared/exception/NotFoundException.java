@@ -21,12 +21,23 @@ public class NotFoundException extends ApiException {
     /**
      * Constructs a NotFoundException with a predefined message format.
      * This constructor is typically used when an entity is not found by its
-     * identifier.
+     * message.
      *
-     * @param entity     the name of the entity
-     * @param identifier the identifier of the entity that was not found
+     * @param entity  the name of the entity
+     * @param message the message of the entity that was not found
      */
-    public NotFoundException(String entity, Object identifier) {
-        super(String.format("%s with ID %s not found", entity, identifier), HttpStatus.NOT_FOUND);
+    public NotFoundException(String entity, Object message) {
+        super(String.format("No %s with ID %s was found", entity, message), HttpStatus.NOT_FOUND);
     }
+
+    /**
+     * Constructs a NotFoundException with a custom message.
+     * This constructor is typically used when an something is not found.
+     *
+     * @param message the message of the entity that was not found
+     */
+    public NotFoundException(Object message) {
+        super(String.format("%s", message), HttpStatus.NOT_FOUND);
+    }
+
 }
